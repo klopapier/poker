@@ -21,12 +21,13 @@ Game.prototype.startGame = function () {
 
     console.log('<<< Dealing first row of cards, Good Luck! >>>');
 
-    var that = this;
+    var that = this,
+        i;
 
     that.p1Hands = [];
     that.p2Hands = [];
 
-    for (var i = 0; i < 10; i++) {
+    for ( i = 0; i < 10; i++ ) {
 
         if (i < 5) {
 
@@ -57,17 +58,17 @@ Game.prototype.mainLoop = function () {
     that.curr = ( that.round % 2 === 0 ) ? 1 : 2;
     that.activeCard = that.deck.shift();
     
-    console.log('Round Number ' + that.round);
+    console.log( 'Round Number ' + that.round );
     
     that.printGameState();
     that.getMove();
 
 };
 
-Game.prototype.isHuman = function (playerID) {
+Game.prototype.isHuman = function ( playerID ) {
     
     var that = this;
-    return that.humanState[playerID - 1];
+    return that.humanState[ playerID - 1 ];
 
 };
 
@@ -93,18 +94,18 @@ Game.prototype.getHumanMove = function () {
     var that = this,
         promptMessage = 'Player ' + that.curr + ' ( You )  enter column number';
 
-    prompt.get([promptMessage], function (err, input) {
+    prompt.get([promptMessage], function ( err, input ) {
 
-        var columnNumber = parseInt(input[promptMessage], 10);
+        var columnNumber = parseInt( input[promptMessage], 10 );
 
-        if (!that.isValidInput(columnNumber)) {
+        if ( !that.isValidInput( columnNumber ) ) {
 
             console.log('That isnt a valid choice');
             that.getMove();
 
         } else {
 
-            that.makeMove(columnNumber);
+            that.makeMove( columnNumber );
 
         }
     });
@@ -139,25 +140,25 @@ Game.prototype.getAiMove = function () {
 
 };
 
-Game.prototype.makeMove = function (columnNumber) {
+Game.prototype.makeMove = function ( columnNumber ) {
 
     var that = this;
 
-    that.addToHand(columnNumber);
+    that.addToHand( columnNumber );
     that.round += 1;
     that.mainLoop();
 
 };
 
-Game.prototype.isValidInput = function (number) {
+Game.prototype.isValidInput = function ( number ) {
 
-    if (isNaN(number) || number < 0 || number > 4) {
+    if ( isNaN(number) || number < 0 || number > 4 ) {
         return false;
     }
 
     var that = this,
         activePlayerHands = ( that.curr === 1 ) ? that.p1Hands : that.p2Hands,
-        minLength = _.min(activePlayerHands, function (hand) { return hand.length; }).length;
+        minLength = _.min( activePlayerHands, function (hand) { return hand.length; } ).length;
 
     if ( activePlayerHands[number].length !== minLength ) {
 
@@ -203,9 +204,9 @@ Game.prototype.determineWinner = function () {
         }
     }
 
-    console.log((p1WinCount >= 3) ? ' <<< Congratulation You wins >>> ' : '<<< Congratulation Player 2 wins >>>');
+    console.log( ( p1WinCount >= 3 ) ? ' <<< Congratulation You wins >>> ' : '<<< Congratulation Player 2 wins >>>' );
 
-    console.log('<<< Game Over >>>');
+    console.log( '<<< Game Over >>>' );
 
 };
 
@@ -215,10 +216,10 @@ Game.prototype.printGameState = function () {
 
     var that = this;
 
-    that.printer.printHands(that.p1Hands, '<<< Player 1 ( You ) Hands: >>>');
-    that.printer.printHands(that.p2Hands, '<<< Player 2 Hands: >>>');
+    that.printer.printHands( that.p1Hands, '<<< Player 1 ( You ) Hands: >>>' );
+    that.printer.printHands( that.p2Hands, '<<< Player 2 Hands: >>>' );
 
-    console.log('current card is:', that.printer.printCard(that.activeCard));
+    console.log( 'current card is:', that.printer.printCard( that.activeCard ) );
     
 };
 
