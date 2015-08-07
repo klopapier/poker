@@ -1,0 +1,30 @@
+{
+  "name": "poker",
+  "version": "1.0.0",
+  "description": "poker",
+  "main": "index.js",
+  "scripts": {
+    "test": "poker"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klopapier/poker.git"
+  },
+  "keywords": [
+    "poker"
+  ],
+  "author": "Jonnie and Bobby",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/klopapier/poker/issues"
+  },
+  "homepage": "https://github.com/klopapier/poker#readme",
+  "devDependencies": {
+    "mysql": "^2.8.0",
+    "nodemon": "^1.4.0",
+    "lodash": "~2.4.1",
+    "hoyle": "~0.2.2",
+    "colors": "~1.0.3",
+    "prompt": "~0.2.14"
+  }
+}
