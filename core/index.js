@@ -20,14 +20,22 @@ var Game = function () {
 Game.prototype.startGame = function () {
 
     console.log('<<< Dealing first row of cards, Good Luck! >>>');
+
     var that = this;
+
     that.p1Hands = [];
     that.p2Hands = [];
+
     for (var i = 0; i < 10; i++) {
+
         if (i < 5) {
+
             that.p1Hands.push( [ that.deck.shift() ] );
+
         } else {
+
             that.p2Hands.push( [ that.deck.shift() ] );
+
         }
     }
 
@@ -38,6 +46,7 @@ Game.prototype.startGame = function () {
 Game.prototype.mainLoop = function () {
     
     var that = this;
+
     if ( that.round === 40 ) {
         
         that.determineWinner();
@@ -65,6 +74,7 @@ Game.prototype.isHuman = function (playerID) {
 Game.prototype.getMove = function () {
     
     var that = this;
+
     if ( that.isHuman( that.curr ) ) {
         
         that.getHumanMove();
@@ -144,11 +154,12 @@ Game.prototype.isValidInput = function (number) {
     if (isNaN(number) || number < 0 || number > 4) {
         return false;
     }
+
     var that = this,
         activePlayerHands = ( that.curr === 1 ) ? that.p1Hands : that.p2Hands,
         minLength = _.min(activePlayerHands, function (hand) { return hand.length; }).length;
 
-    if (activePlayerHands[number].length !== minLength) {
+    if ( activePlayerHands[number].length !== minLength ) {
 
         return false;
 
@@ -201,6 +212,7 @@ Game.prototype.determineWinner = function () {
 Game.prototype.printGameState = function () {
 
     console.log('\033[2J');
+
     var that = this;
 
     that.printer.printHands(that.p1Hands, '<<< Player 1 ( You ) Hands: >>>');
