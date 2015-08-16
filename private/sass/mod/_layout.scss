@@ -1,0 +1,120 @@
+/*
+  layout.scss
+  author: giant ape
+  url: https://github.com/giantape
+*/
+
+@import "mixin";
+
+*{
+    margin: 10px;
+    @include breakpoint(desktop) {
+        margin: 0;
+        padding: 0;
+    }
+
+}
+body {
+
+    font-family: arial, sans-serif;
+
+}
+
+.container {
+
+    width: 960px;
+    //overflow: hidden;
+    margin: 0 auto;
+    padding: $container-padding 0;
+
+    @include breakpoint(mobileonly) {
+        width: 100%;
+        //margin: $gutter-in-container;
+    }
+
+    @include breakpoint(tablet) {
+        width: 100%;
+        padding: 0;
+    }
+
+    @include breakpoint(tablet-landscape) {
+        width: 100%;
+    }
+
+}
+
+.logo{
+
+    display: block;
+    text-align: center;
+
+}
+
+.header {
+
+    border-bottom: 2px solid #ccc;
+    padding: $container-padding;
+
+}
+
+
+.list-item{
+
+    list-style-type: none;
+    padding: 0;
+
+}
+
+.copyright {
+
+    font-size: $copyright;
+
+}
+
+// Align-text
+%text-center,
+.text-center{
+    text-align: center;
+}
+
+%text-left,
+.text-left{
+    text-align: left;
+}
+
+%text-right,
+.text-right{
+    text-align: right;
+}
+
+// font-size
+h1,h2,h3,h4,h5,h6 {
+    color: $default-color;
+    margin: $gutter-in-container 0;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+/** clearfix **/
+
+.clearfix {
+    &:after {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+        height: 0;
+    }
+    display: inline-block;
+}
+
+html[xmlns] .clearfix {
+    display: block;
+}
+
+* html .clearfix {
+    height: 1%;
+}

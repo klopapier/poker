@@ -1,0 +1,113 @@
+/*
+  grid.scss
+  author: giant ape
+  url: https://github.com/giantape
+*/
+
+.row {
+  clear: both;
+  padding: 0;
+  margin: 0;
+}
+.col {
+  display: block;
+  float: left;
+  margin: 1% 0 1% 1.6%;
+  &:first-child {
+    margin-left: 0;
+  }
+}
+.group {
+  zoom: 1;
+  &:before {
+    content: "";
+    display: table;
+  }
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// col-1
+.col-12 {
+  width: 100%;
+  padding: $gutter-in-container 0;
+}
+.col-11 {
+  width: 91.53%;
+  padding: $gutter-in-container 0;
+}
+.col-10 {
+  width: 83.06%;
+  padding: $gutter-in-container 0;
+}
+.col-9 {
+  width: 74.6%;
+  padding: $gutter-in-container 0;
+}
+.col-8 {
+  width: 66.13%;
+  padding: $gutter-in-container 0;
+}
+.col-7 {
+  width: 57.66%;
+  padding: $gutter-in-container 0;
+}
+.col-6 {
+  width: 49.2%;
+  padding: $gutter-in-container 0;
+}
+.col-5 {
+  width: 40.73%;
+  padding: $gutter-in-container 0;
+}
+.col-4 {
+  width: 32.26%;
+  padding: $gutter-in-container 0;
+}
+.col-3 {
+  width: 23.8%;
+  padding: $gutter-in-container 0;
+}
+.col-2 {
+  width: 15.33%;
+  padding: $gutter-in-container 0;
+}
+.col-1 {
+  width: 6.866%;
+  padding: $gutter-in-container 0;
+}
+
+// dummies
+
+.color {
+  background: $background-box;
+  text-align: center;
+}
+
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+  //width: 100%;
+  @include breakpoint(mobileonly) {
+    .col {
+      margin: 1% 0;
+    }
+    width: 100%;
+    padding: $gutter-in-container 0;
+
+  }
+
+}

@@ -1,0 +1,48 @@
+// variable.scss
+//author: giant ape
+//url: https://github.com/giantape
+
+$default-color: #333;
+$font-color: darken($default-color, 60%);
+$light-color: lighten($default-color, 20%);
+$dark-color: darken($default-color, 20%);
+$info-color: #5bc0de !default;
+$warning-color: #ffc40d !default;
+$danger-color: #ee5f5b !default;
+$success-color: #62c462 !default;
+$black-color: lighten(black, 5%);
+$white-color: darken(white, 5%);
+$background-color: white !default;
+$border-color: #ccc !default;
+$background-box: #eee !default;
+$body-background: #f1f1f1 !default;
+$button-color: #21759b !default;
+$color_cape_cod: #414141 !default;
+$color_oxford_blue: #384958 !default;
+$color_wild_sand: #f5f5f5 !default;
+$white: #fff !default;
+$color_outer_space: #2c343b !default;
+$color_scarpa_flow: #4e5b67 !default;
+$color_east_bay: #4f4c83 !default;
+$color_dingley: #65834c !default;
+$color_bismark: #4c7983 !default;
+$color_spicy_mix: #834c4c !default;
+$color_kashmir_blue: #4d6899 !default;
+$color_sycamore: #97944c !default;
+
+  // RGBA
+$black_45: rgba(0,0,0,0.45);
+
+
+  //$gutter: 10px;
+
+$container-width: 960px;
+$container-padding: 20px;
+$container-inner-width: $container-width - (2 * $container-padding);
+$gutter-in-container: 15px;
+$text-width: 60%;
+  //$image-in-container-width: $container-inner-width - ($text-width -$gutter);
+
+  //font-sizes
+$body-text: 13px;
+$copyright: 12px;

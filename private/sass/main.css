@@ -1,0 +1,195 @@
+/*
+  layout.scss
+  author: giant ape
+  url: https://github.com/giantape
+*/
+/*
+  mixin.scss
+  author: giant ape
+  url: https://github.com/giantape
+*/
+* {
+  margin: 10px; }
+  @media (min-width: 1200px) {
+    * {
+      margin: 0;
+      padding: 0; } }
+
+body {
+  font-family: arial, sans-serif; }
+
+.container {
+  width: 960px;
+  margin: 0 auto;
+  padding: 20px 0; }
+  @media (max-width: 736px) {
+    .container {
+      width: 100%; } }
+  @media (max-width: 768px) {
+    .container {
+      width: 100%;
+      padding: 0; } }
+  @media (max-width: 1024px) {
+    .container {
+      width: 100%; } }
+
+.logo {
+  display: block;
+  text-align: center; }
+
+.header {
+  border-bottom: 2px solid #ccc;
+  padding: 20px; }
+
+.list-item {
+  list-style-type: none;
+  padding: 0; }
+
+.copyright {
+  font-size: 12px; }
+
+.text-center {
+  text-align: center; }
+
+.text-left {
+  text-align: left; }
+
+.text-right {
+  text-align: right; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #333333;
+  margin: 15px 0; }
+
+h1 {
+  font-size: 24px; }
+
+/** clearfix **/
+.clearfix {
+  display: inline-block; }
+  .clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0; }
+
+html[xmlns] .clearfix {
+  display: block; }
+
+* html .clearfix {
+  height: 1%; }
+
+/*
+  mixin.scss
+  author: giant ape
+  url: https://github.com/giantape
+*/
+/*
+  grid.scss
+  author: giant ape
+  url: https://github.com/giantape
+*/
+.row {
+  clear: both;
+  padding: 0;
+  margin: 0; }
+
+.col {
+  display: block;
+  float: left;
+  margin: 1% 0 1% 1.6%; }
+  .col:first-child {
+    margin-left: 0; }
+
+.group {
+  zoom: 1; }
+  .group:before {
+    content: "";
+    display: table; }
+  .group:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.col-12 {
+  width: 100%;
+  padding: 15px 0; }
+
+.col-11 {
+  width: 91.53%;
+  padding: 15px 0; }
+
+.col-10 {
+  width: 83.06%;
+  padding: 15px 0; }
+
+.col-9 {
+  width: 74.6%;
+  padding: 15px 0; }
+
+.col-8 {
+  width: 66.13%;
+  padding: 15px 0; }
+
+.col-7 {
+  width: 57.66%;
+  padding: 15px 0; }
+
+.col-6 {
+  width: 49.2%;
+  padding: 15px 0; }
+
+.col-5 {
+  width: 40.73%;
+  padding: 15px 0; }
+
+.col-4 {
+  width: 32.26%;
+  padding: 15px 0; }
+
+.col-3 {
+  width: 23.8%;
+  padding: 15px 0; }
+
+.col-2 {
+  width: 15.33%;
+  padding: 15px 0; }
+
+.col-1 {
+  width: 6.866%;
+  padding: 15px 0; }
+
+.color {
+  background: #eeeeee;
+  text-align: center; }
+
+@media (max-width: 736px) {
+  .col-1,
+  .col-2,
+  .col-3,
+  .col-4,
+  .col-5,
+  .col-6,
+  .col-7,
+  .col-8,
+  .col-9,
+  .col-10,
+  .col-11,
+  .col-12 {
+    width: 100%;
+    padding: 15px 0; }
+    .col-1 .col,
+    .col-2 .col,
+    .col-3 .col,
+    .col-4 .col,
+    .col-5 .col,
+    .col-6 .col,
+    .col-7 .col,
+    .col-8 .col,
+    .col-9 .col,
+    .col-10 .col,
+    .col-11 .col,
+    .col-12 .col {
+      margin: 1% 0; } }

@@ -1,0 +1,33 @@
+/*
+  mixin.scss
+  author: giant ape
+  url: https://github.com/giantape
+*/
+
+//defined breakpoint
+@import "variables";
+
+$mobile: 736px;
+$newMobile: 375px;
+$tablet: 768px;
+$tablet-landscape: 1024px;
+$desktop: 1200px;
+
+@mixin breakpoint($point) {
+  @if $point == desktop {
+    @media (min-width: $desktop) { @content ; }
+  }
+  @else if $point == laptop {
+    @media (min-width: $desktop) { @content ; }
+  }
+  @else if $point == tablet {
+    @media (max-width: $tablet) { @content ; }
+  }
+  @else if $point == tablet-landscape {
+    @media (max-width: $tablet-landscape)  { @content ; }
+  }
+  @else if $point == mobileonly {
+    @media (max-width: $mobile)  { @content ; }
+
+  }
+}
