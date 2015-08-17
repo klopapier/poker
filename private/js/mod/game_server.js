@@ -29,4 +29,6 @@ var createTables = function() {
     lobby.tables['table3'] = new Table('table3', 10, lobby.io);
 };
 
+//module.exports = init;
+
 exports.init = init;

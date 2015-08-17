@@ -7,10 +7,11 @@ var express = require('express'),
     sassMiddleware = require('node-sass-middleware'),
     routes = require('./private/js/index'),
     users = require('./private/js/users'),
-    game_server = require('./private/js/mod/game_server'),
+    //game_server = require('./private/js/mod/game_server'),
     app = express();
 
-
+// Load function
+//game_server.init();
 //sass
 app.use(express.static('public'))
     .use(
@@ -33,8 +34,6 @@ app.set('views', path.join('./public/views/'))
         layout: true
     });
 
-// Load function
-game_server.init();
 
 // Export Modules
 module.exports = app;
