@@ -1,7 +1,9 @@
 var express = require('express'),
     router = express.Router(),
-    //init = require('./mod/game_server'),
-    game_server = require('./mod/game_server');
+    player = require('./mod/simulate'),
+    path = require('path'),
+    fs = require('fs'),
+    vm = require('vm');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -10,9 +12,15 @@ router.get('/', function(req, res) {
 });
 
 //var _initSection = game_server.init;
+var data = function( path ) {
 
-var init = game_server.init;
-console.log(game_server.init);
+    var dataModel = fs.readFileSync( path );
+
+    vm.getValue( dataModel, path );
+
+}.bind(this);
+
+data('./mod/');
 
 
 module.exports = router;
