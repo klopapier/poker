@@ -7,7 +7,7 @@ var express = require('express'),
     sassMiddleware = require('node-sass-middleware'),
     routes = require('./private/js/index'),
     users = require('./private/js/users'),
-    //game_server = require('./private/js/mod/game_server'),
+    player = require('./private/js/mod/simulate'),
     app = express();
 
 // Load function
@@ -17,10 +17,10 @@ app.use(express.static('public'))
     .use(
         sassMiddleware({
             src: './private/sass/',
-            dest: path.join('./public/stylesheets/'),
+            dest: path.join('./public/css/'),
             debug: true,
             outputStyle: 'compressed',
-            prefix: '/stylesheets/'
+            prefix: '/css/'
         })
     )
     .use('/', routes)
@@ -31,9 +31,10 @@ app.use(express.static('public'))
 app.set('views', path.join('./public/views/'))
     .set('view engine', 'jade')
     .set('view options', {
-        layout: true
-    });
 
+        layout: true
+
+    });
 
 // Export Modules
 module.exports = app;

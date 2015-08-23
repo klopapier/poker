@@ -50,6 +50,7 @@ Table.prototype.initGameLoop = function() {
 
     var that = this;
     that.on('preflop', function() {
+
         var seat, dealCards;
         that.deck.reset();
         that.rotateButton();
@@ -146,17 +147,18 @@ Table.prototype.initGameLoop = function() {
         that.emit('nextSeat');
     });
 
+    //deprecated use this insted self
     that.on('nextSeat', function() {
         var self = this,
             actions, check_or_call,
-            nextSeat = this.nextSeat(),
-            lastToRaise = this.state.lastToRaise;
+            nextSeat = self.nextSeat(),
+            lastToRaise = self.state.lastToRaise;
 
-        if (this.state.numPlayersInHand === 1) {
-            console.log(nextSeat.player.name + ' wins the %s pot!', this.state.potSize);
-            nextSeat.wonHand(this.state.potSize);
-            this.showPlayersChipCounts();
-            this.resetSeats();
+        if (self.state.numPlayersInHand === 1) {
+            console.log(nextSeat.player.name + ' wins the %s pot!', self.state.potSize);
+            nextSeat.wonHand(self.state.potSize);
+            self.showPlayersChipCounts();
+            self.resetSeats();
             console.log('Next hand coming up...'.prompt);
             return setTimeout(function() {
                 self.state.reset();
@@ -164,40 +166,45 @@ Table.prototype.initGameLoop = function() {
             }, 1000);
         }
 
-        if (nextSeat === lastToRaise || (!lastToRaise && nextSeat === this.state.firstToAct)) {
-            this.emit('nextState');
+        if (nextSeat === lastToRaise || (!lastToRaise && nextSeat === self.state.firstToAct)) {
+            self.emit('nextState');
         }
         else {
-            if (!this.state.firstToAct) {
-                this.state.firstToAct = nextSeat;
+            if (!self.state.firstToAct) {
+                self.state.firstToAct = nextSeat;
             }
-            check_or_call = (this.state.lastToRaise || this.state.getState() === 'preflop')
+            check_or_call = (self.state.lastToRaise || self.state.getState() === 'preflop')
                             ? 'call'
                             : 'check';
-            this.state.actions = actions = ['raise', check_or_call, 'fold'];
+            self.state.actions = actions = ['raise', check_or_call, 'fold'];
             nextSeat.player.getAction(actions);
         }
     });
 
-    this.on('nextState', function() {
+    that.on('nextState', function() {
         // reset the amount each player has bet per round
-        this.seats.forEach(function(seat) {
+        that.seats.forEach(function(seat) {
             if (seat) seat.amountBetPerRound = 0;
         });
-        this.emit(this.state.nextState());
+        that.emit(that.state.nextState());
     });
 };
 
+//todo: defined the winner!
 Table.prototype.determineWinner = function() {
 
-    var handInfo, winningHand, winner,
-        handAnalyzer = new HandAnalyzer(this.boardCards);
+    var self = this,
+        handAnalyzer = new HandAnalyzer(self.boardCards),
+        handInfo,
+        winningHand,
+        winner;
 
     console.time('<<< HandAnalyzer >>>');
-    // find winner
-    this.seats.forEach(function(seat) {
 
-        if (this.isInHand(seat)) {
+    // find winner
+    self.seats.forEach(function(seat) {
+
+        if (self.isInHand(seat)) {
 
             handInfo = handAnalyzer.analyze(seat.cards);
 
@@ -220,38 +227,42 @@ Table.prototype.determineWinner = function() {
                 }
             }
         }
-    }, this);
-    console.timeEnd('HandAnalyzer');
+    }, self);
+
+    console.timeEnd('<<< HandAnalyzer >>>');
 
     // distribute chips
-    this.seats.forEach(function(seat) {
+    self.seats.forEach(function(seat) {
 
-        if (this.isInHand(seat) && seat !== winner) {
+        if (self.isInHand(seat) && seat !== winner) {
 
             seat.lostHand();
 
         }
-    }, this);
+    }, self);
 
-    winner.wonHand(this.state.potSize);
-    console.log('<<< %s wins $%s with %s'.info, winner.player.name, this.state.potSize, winningHand.handType);
+    winner.wonHand(self.state.potSize);
+    console.log('<<< %s wins $%s with %s'.info, winner.player.name, self.state.potSize, winningHand.handType);
     console.log('<<< Winning hand: '.info + winningHand.hand + '\n');
-    this.showPlayersChipCounts();
+    self.showPlayersChipCounts();
 };
 
 // Player joins the table as an observer
 Table.prototype.join = function(player) {
 
-    console.log('%s has joined table %s', player.name, this.name);
-    this.observers[player.name] = player;
+    var self = this;
+    console.log('%s has joined table %s', player.name, self.name);
+    self.observers[player.name] = player;
 
 };
 
 // Player leaves the table
 Table.prototype.leave = function(player) {
 
-    console.log('%s has left table %s', player.name, this.name);
-    delete this.observers[player.name];
+    var self = this;
+
+    console.log('%s has left table %s', player.name, self.name);
+    delete self.observers[player.name];
 
 };
 
@@ -259,15 +270,17 @@ Table.prototype.leave = function(player) {
 // hand until they 'sit in'
 Table.prototype.sit = function(player, seatNumber, buyIn) {
 
-    if (this.seats[seatNumber] === undefined) {
+    var self = this;
 
-        console.log('%s is sitting at table %s in seat %s with %s', player.name, this.name, seatNumber, buyIn);
-        delete this.observers[player.name];
-        this.seats[seatNumber] = new Seat(player, seatNumber, this.state, buyIn);
+    if (self.seats[seatNumber] === undefined) {
+
+        console.log('%s is sitting at table %s in seat %s with %s', player.name, self.name, seatNumber, buyIn);
+        delete self.observers[player.name];
+        self.seats[seatNumber] = new Seat(player, seatNumber, self.state, buyIn);
 
     } else {
 
-        console.log('Seat %s is taken on table %s', seatNumber, this.name);
+        console.log('Seat %s is taken on table %s', seatNumber, self.name);
 
     }
 };
@@ -275,27 +288,31 @@ Table.prototype.sit = function(player, seatNumber, buyIn) {
 // Player leaves their seat
 Table.prototype.stand = function(player, seatNumber) {
 
-    console.log('%s has stood up from table %s', player.name, this.name);
-    this.player.releaseChips(this.seats[seatNumber].chips);
-    delete this.seats[seatNumber];
-    this.observers[player.name] = player;
+    var self = this;
+
+    console.log('%s has stood up from table %s', player.name, self.name);
+    self.player.releaseChips(self.seats[seatNumber].chips);
+    delete self.seats[seatNumber];
+    self.observers[player.name] = player;
 
 };
 
 // Player will be dealt in on the next hand
 Table.prototype.sitIn = function(player, seatNumber) {
 
-    this.seats[seatNumber].sittingOut = false;
-    this.numPlayersToBeDealt++;
+    var self = this;
 
-    if (this.numPlayersToBeDealt === 1) {
+    self.seats[seatNumber].sittingOut = false;
+    self.numPlayersToBeDealt++;
 
-        this.state.button = this.seats[seatNumber];
+    if (self.numPlayersToBeDealt === 1) {
+
+        self.state.button = self.seats[seatNumber];
 
     }
-    else if (this.numPlayersToBeDealt === 2) {
+    else if (self.numPlayersToBeDealt === 2) {
 
-        this.startGameLoop();
+        self.startGameLoop();
 
     }
 };
@@ -303,41 +320,49 @@ Table.prototype.sitIn = function(player, seatNumber) {
 // Player remains in seat but will be dealt out on the next hand
 Table.prototype.sitOut = function(player, seatNumber) {
 
-    this.seats[seatNumber].sittingOut = true;
-    this.numPlayersToBeDealt--;
+    var self = this;
 
-    if (this.numPlayersToBeDealt === 0) {
+    self.seats[seatNumber].sittingOut = true;
+    self.numPlayersToBeDealt--;
 
-        this.state.button = null;
-        this.state.currentSeat = null;
+    if (self.numPlayersToBeDealt === 0) {
 
-    } else if (this.numPlayersToBeDealt === 1) {
+        self.state.button = null;
+        self.state.currentSeat = null;
 
-        this.stopGameLoop();
-        this.state.button = this.nextSeat();
+    } else if (self.numPlayersToBeDealt === 1) {
+
+        self.stopGameLoop();
+        self.state.button = self.nextSeat();
 
     }
 };
 
 Table.prototype.rotateButton = function() {
 
-    this.state.currentSeat = this.state.button = this._nextSeat(this.state.button, true);
+    var self = this;
+
+    self.state.currentSeat = self.state.button = self._nextSeat(self.state.button, true);
 
 };
 
 // stateful
 Table.prototype.nextSeat = function(isBeforeCardsDealt) {
-    return this.state.currentSeat = this._nextSeat(this.state.currentSeat, isBeforeCardsDealt);
+
+    var that = this;
+    return that.state.currentSeat = that._nextSeat(that.state.currentSeat, isBeforeCardsDealt);
 };
 
 // stateless
 Table.prototype._nextSeat = function(currentSeat, isBeforeCardsDealt) {
+
     var nextSeat, currentSeatNum = currentSeat.seatNumber,
-        isPlayerIn = isBeforeCardsDealt ?  this.isSittingIn : this.isInHand;
+        that = this,
+        isPlayerIn = isBeforeCardsDealt ?  that.isSittingIn : that.isInHand;
 
     do {
 
-        nextSeat = this.seats[++currentSeatNum % this.numSeats];
+        nextSeat = that.seats[++currentSeatNum % that.numSeats];
 
     }
 
@@ -347,10 +372,11 @@ Table.prototype._nextSeat = function(currentSeat, isBeforeCardsDealt) {
 
 Table.prototype.getNumPlayersToBeDealt = function() {
 
-    var count = 0;
-    this.seats.forEach(function(seat) {
-        if (this.isSittingIn(seat)) count++;
-    }, this);
+    var count = 0,
+        that = this;
+    that.seats.forEach(function(seat) {
+        if (that.isSittingIn(seat)) count++;
+    }, that);
 
     return count;
 };
@@ -369,7 +395,8 @@ Table.prototype.isSittingIn = function(seat) {
 
 Table.prototype.resetSeats = function() {
 
-    this.seats.forEach(function(seat) {
+    var that = this;
+    that.seats.forEach(function(seat) {
         seat.reset();
     });
 
@@ -377,7 +404,8 @@ Table.prototype.resetSeats = function() {
 
 Table.prototype.showPlayersChipCounts = function() {
 
-    this.seats.forEach(function(seat) {
+    var that = this;
+    that.seats.forEach(function(seat) {
         console.log('Player %s has %s at this table and %s chips total', seat.player.name, seat.chips, seat.player.chipsTotal);
     });
 
@@ -385,9 +413,10 @@ Table.prototype.showPlayersChipCounts = function() {
 
 Table.prototype.broadcast = function(event, data) {
 
+    var that = this;
     console.log(data);
-    if (this.io) {
-        this.io.sockets.in(this.tableName).emit(event, data || null);
+    if (that.io) {
+        that.io.sockets.in(that.tableName).emit(event, data || null);
     }
 
 };

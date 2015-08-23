@@ -1,3 +1,5 @@
+'use strict';
+
 var util   = require('util'),
     utils  = require('./lib/utils'),
     Player = require('./lib/player'),

@@ -5,22 +5,27 @@ var express = require('express'),
     fs = require('fs'),
     vm = require('vm');
 
+
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.render('index', { title: 'Game Poker' });
+
+    var data = function( path ) {
+
+        var dataModel = fs.readFileSync( path );
+
+        vm.runInThisContext( dataModel, path );
+
+    }.bind( this );
+
+    data( __dirname + '/mod/simulate.js');
+
+    res.render('index', {
+        title: 'Game Poker',
+        player: data
+
+    });
 
 });
-
-//var _initSection = game_server.init;
-var data = function( path ) {
-
-    var dataModel = fs.readFileSync( path );
-
-    vm.getValue( dataModel, path );
-
-}.bind(this);
-
-data('./mod/');
 
 
 module.exports = router;

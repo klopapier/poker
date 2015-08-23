@@ -7,21 +7,25 @@
   },
   "repository": {
     "type": "git",
-    "url" : "github.com/giantape"
+    "url": "github.com/giantape"
   },
   "dependencies": {
     "express": "^4.8.2",
-    "lodash"   : "*",
+    "lodash": "*",
     "socket.io": "*",
-    "colors"   : "*",
+    "colors": "*",
     "node-sass-middleware": "*",
     "jade": "*",
-    "mysql"    : "2.0.0-alpha8"
+    "mysql": "2.0.0-alpha8"
   },
   "devDependencies": {
     "browser-sync": "^1.3.3",
+    "browserify": "^11.0.1",
     "gulp": "^3.8.7",
+    "gulp-browserify": "^0.5.1",
     "gulp-nodemon": "^1.0.4",
-    "jasmine-node": "^1.14.5"
+    "gulp-requirejs-optimize": "^0.2.0",
+    "jasmine-node": "^1.14.5",
+    "requirejs": "^2.1.20"
   }
 }
