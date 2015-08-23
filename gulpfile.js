@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 
 gulp.task('default', ['browser-sync'], function () {})
     .task('poker', ['browser-sync'], function () {})
-    .task('poker:sync', ['console'], function() {
+    .task('poker:sync', ['game:console'], function() {
 
         browserSync.init(null, {
             proxy: 'http://localhost:5000',
@@ -18,7 +18,7 @@ gulp.task('default', ['browser-sync'], function () {})
         });
 });
 
-gulp.task('console', function (obj) {
+gulp.task('game:console', function (obj) {
 
     var started = false;
 
