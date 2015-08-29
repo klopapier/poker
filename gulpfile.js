@@ -5,8 +5,8 @@ var gulp = require('gulp'),
     nodemon = require('gulp-nodemon');
 
 
-gulp.task('default', ['browser-sync'], function () {})
-    .task('poker', ['browser-sync'], function () {})
+gulp.task('default', ['poker'], function () {})
+    .task('poker', ['poker:sync'], function () {})
     .task('poker:sync', ['game:console'], function() {
 
         browserSync.init(null, {

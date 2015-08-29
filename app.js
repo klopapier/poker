@@ -8,6 +8,7 @@ var express = require('express'),
     routes = require('./private/js/index'),
     users = require('./private/js/users'),
     player = require('./private/js/mod/simulate'),
+    init = require('./private/js/mod/game_server'),
     app = express();
 
 // Load function
@@ -41,3 +42,6 @@ module.exports = app;
 
 //Proxy Listening
 app.listen(5000);
+
+// configure io
+//var io = require('socket.io').listen( server );
