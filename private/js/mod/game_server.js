@@ -31,4 +31,6 @@ var createTables = function() {
 
 //module.exports = init;
 
-exports.init = init;
+exports.init = function(){
+    return init();
+};
