@@ -4,6 +4,7 @@
 var express = require('express'),
     path = require('path'),
     router = express.Router(),
+    //io = require('socket.io'),
     sassMiddleware = require('node-sass-middleware'),
     routes = require('./private/js/index'),
     users = require('./private/js/users'),
@@ -36,6 +37,11 @@ app.set('views', path.join('./public/views/'))
         layout: true
 
     });
+
+
+//Csonnect to io
+
+//io = socketio.listen(server);
 
 // Export Modules
 module.exports = app;

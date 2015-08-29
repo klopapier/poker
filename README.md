@@ -1,10 +1,6 @@
 # poker
 poker
 
-
-- table.js line > 192 > //todo: defined the winner!
-- table.js line 150 > self defined
-- gulptasks > load app
 - app required client site
 
 -gulpfiles

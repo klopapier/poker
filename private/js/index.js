@@ -27,5 +27,9 @@ router.get('/', function(req, res) {
 
 });
 
+/*router.get('/', function(req, res, data) {
+    res.render('index', { title: data});
+});
+*/
 
 module.exports = router;
