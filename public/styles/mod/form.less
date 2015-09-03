@@ -1,0 +1,67 @@
+/*
+  form.less
+  author: giant ape
+  url: https://github.com/giantape
+*/
+
+
+#bet-input {
+  width: 100%;
+  margin-top: 20px;
+}
+
+input {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+button, input[type="submit"], .button {
+  padding: 16px;
+  background-color: rgba(0,0,0,0);
+  border: 1px solid @light-purple;
+  border-radius: 5px;
+  color: @light-purple;
+  font-size: 2em;
+  font-weight: lighter;
+  &.small {
+    font-size: 1em;
+  }
+  &.control-button {
+
+    padding: 0;
+    height: 57%;
+    width: 82%;
+    background-color: @transparent-purple;
+    border: 3px solid @light-purple;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+
+    span {
+      display: block;
+      font-size: 40px;
+      text-align: center;
+      padding-left: 15px;
+
+    }
+    &.small {
+      font-size: 1em;
+    }
+  }
+}
+
+input[type="range"] {
+  width: 90%;
+  margin-top: 8%;
+  padding: 0;
+}
+
+
+input[type="text"], input[type="number"] {
+  padding: 8px;
+  width: 228px;
+  border: 1px solid @light-purple;
+  border-radius: 5px;
+  color: @light-purple;
+  font-size: 1.4em;
+}

@@ -1,0 +1,47 @@
+/*
+  mixin.less
+  author: giant ape
+  url: https://github.com/giantape
+*/
+
+
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.box-shadow(@h: 0em; @v: 0em; @blur: 0em; @spread: 0.1em; @inset: inset) {
+  -webkit-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+.rotate(@angle) {
+  -webkit-transform: rotate(@angle);
+  -ms-transform: rotate(@angle);
+  transform: rotate(@angle);
+}
+
+.scale(@x;@y) {
+  -webkit-transform: scale(@x,@y);
+  -ms-transform: scale(@x,@y);
+  transform: scale(@x,@y);
+}
+
+.animation(@name; @duration: 2s; @iteration: infinite; @timing: linear) {
+  -webkit-animation: @arguments;
+  animation: @arguments;
+}
+
+.keyframes(@prefix) when (@prefix = webkit) {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(359deg); }
+}
+
+.keyframes(@prefix) when (@prefix = none) {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(359deg); }
+}
+
+.keyframes(@prefix) {
+
+}

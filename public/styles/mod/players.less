@@ -1,0 +1,94 @@
+/*
+  players.less
+  author: giant ape
+  url: https://github.com/giantape
+*/
+
+
+div.player-wrap {
+  width: 64%;
+  margin: 36% auto 0;
+  position: relative;
+  &.top {
+    margin-top: 45%;
+  }
+  &.bottom {
+    margin-top: 22%;
+  }
+  &.left {
+    margin-left: 30%;
+  }
+  &.right {
+    margin-left: 8%;
+  }
+  &.side {
+    margin-top: 32%;
+  }
+
+  .player-cards {
+    overflow: hidden;
+    height: 60px;
+    left: 32px;
+    position: absolute;
+    top: 0px;
+    width: 100px;
+    -webkit-transition: top 0.4s ease;
+    transition: top 0.4s ease;
+    &.dealt {
+      top: -60px;
+    }
+    .card:first-child {
+      left: 0;
+    }
+    .card {
+      left: 28px;
+      position: absolute;
+    }
+  }
+}
+div.seat {
+  padding: 10% 0;
+  background-color: @background-color;
+  border: 3px solid @light-purple;
+  border-radius: 5px;
+  color: @light-purple;
+  font-size: 1.4em;
+  font-weight: lighter;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 5px 0 @dark-purple;
+  -webkit-transition: box-shadow 0.2s ease, border 0.2s ease;
+  transition: box-shadow 0.2s ease, border 0.2s ease;
+  &.active {
+    color: @lavender;
+    border: 5px solid @lavender;
+    box-shadow: 0 0 5px 0 @lavender;
+  }
+  p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+  }
+  .player-content {
+    span {
+      line-height: 1.2;
+      display: block;
+    }
+    .notification {
+      line-height: 2.4;
+    }
+  }
+}
+
+div#board-wrap {
+  margin: 6% 8%;
+  .card {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+  .card-container {
+    width: 19%;
+    display: inline-block;
+  }
+}

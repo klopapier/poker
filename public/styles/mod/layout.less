@@ -1,0 +1,131 @@
+/*
+  layout.less
+  author: giant ape
+  url: https://github.com/giantape
+*/
+
+
+body {
+  margin: 0;
+  background: @background-color;
+  font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+  color: @light-purple;
+  font-size: 1em;
+}
+
+h1, h2, h3, h4, h5 {
+  margin-top: 0;
+}
+
+a {
+  text-decoration: none;
+  //font-family: Arial;
+  color: @light-purple;
+  font-size: 1em;
+  white-space: nowrap;
+}
+
+.hidden {
+  display: none;
+}
+
+.error {
+  color: #D64937;
+}
+.container {
+
+  width: 100%;
+  height: auto;
+  overflow: hidden !important;
+}
+
+.content {
+  //margin: 0 auto;
+  width: 920px;
+  height: 768px;
+  float: right;
+  padding: 0 20px;
+  margin: 0;
+}
+
+.sidebar {
+  width: 315px;
+  height: auto;
+  float: right;
+  background: @sidebar;
+  padding: 20px 0;
+  color: @white;
+
+  .avatar {
+
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: @white;
+    margin: 0 auto;
+    border:3px solid @light-purple;
+    color: @sidebar;
+    text-align: center;
+  }
+
+  ul {
+
+    list-style-type: none;
+    padding: 0;
+
+    li {
+
+      padding: 10px 20px;
+      background: @light-purple;
+      border-bottom: 1px solid @white;
+
+      a {
+
+        color: @white;
+        text-decoration: none;
+      }
+
+      &:last-child{
+
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.modal-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  .modal {
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    margin: 0 auto;
+    top: 18%;
+    width: 440px;
+    z-index: 101;
+    label {
+      display: block;
+      font-size: large;
+      margin-bottom: 10px;
+    }
+    .input-left {
+      margin-right: 32px;
+      width: 50%;
+    }
+  }
+  #curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+}

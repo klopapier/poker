@@ -1,0 +1,132 @@
+/*
+  table.less
+  author: giant ape
+  url: https://github.com/giantape
+*/
+
+
+table, tr, th, td {
+  border: 1px solid @light-purple;
+  color: @light-purple;
+  border-collapse: collapse;
+  padding: 8px;
+}
+
+table {
+  width: 100%;
+}
+
+#table-wrap {
+  position: relative;
+}
+
+#table-list {
+  th {
+    color: #2e1f3e;
+    background-color: #9880e9;
+    &.dark-border {
+      border-right: 1px solid #2e1f3e;
+    }
+  }
+  .centered-text {
+    text-align: center;
+  }
+  margin: 40px 0 0;
+}
+
+#table {
+  background-color: @brown;
+  border-radius: 200px;
+  height: 52%;
+  left: 10%;
+  position: absolute;
+  top: 15%;
+  width: 80%;
+  z-index: 0;
+  box-shadow: 0 0 25px 0 @dark-purple;
+  #felt {
+    background-color: @felt-red;
+    border-radius: 175px;
+    width: 92%;
+    height: 86%;
+    position: relative;
+    top: 7%;
+    left: 4%;
+    box-shadow: 0 0 20px 0 #17541D inset;
+  }
+}
+
+div.row {
+  height: 25%;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+
+  &.controls {
+
+    border-radius: 8px;
+    z-index: 1;
+  }
+}
+
+div.cell {
+  float: left;
+  width: 25%;
+  height: auto;
+  position: relative;
+
+  button {
+    //margin: 22.5% 15%;
+  }
+}
+
+div.double-cell {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+.controls {
+
+  div.cell {
+    width: 15%;
+  }
+
+  div.double-cell {
+
+    width: 30%;
+
+    .cell-content {
+      padding: 8%;
+    }
+  }
+  div.chat-cell {
+
+    float: left;
+    width: 25%;
+  }
+}
+
+.cont{
+
+  height: auto;
+  .cell {
+    width: 15%;
+  }
+
+  .double{
+
+    float: left;
+    width: 50%;
+  }
+}
+
+
+.sitIn {
+  padding: 12% 34%;
+  cursor: pointer;
+}
+
+.table-requirements {
+  display: block;
+}
