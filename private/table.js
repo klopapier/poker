@@ -72,7 +72,7 @@ var Table = function( id, name, eventEmitter, seatsCount, bigBlind, smallBlind, 
 			message: '',
 			seat: '',
 			action: ''
-		},
+		}
 	};
 	// Initializing the empty seats
 	for( var i=0 ; i<this.public.seatsCount ; i++ ) {
