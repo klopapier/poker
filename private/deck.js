@@ -25,10 +25,14 @@ Deck.prototype.shuffle = function(){
   var shuffledDeck = [];
 
   for( var i=0 ; i<52 ; i++ ) {
+
       var random_card = this.cards.splice( Math.floor( Math.random() * this.cards.length ), 1 );
       shuffledDeck = shuffledDeck.concat( random_card );
+
   }
+
   this.cards = shuffledDeck;
+
 };
 
 // Method that returns the next x cards of the deck
