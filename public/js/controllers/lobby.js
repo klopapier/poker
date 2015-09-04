@@ -1,6 +1,6 @@
 app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $scope, $rootScope, $http ) {
 
-// cuma buat test push :-)	
+// cuma buat test push :-)....	
 	$scope.lobbyTables = [];
 	$scope.newScreenName = '';
 
