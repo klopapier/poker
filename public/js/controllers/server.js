@@ -1,6 +1,8 @@
 /**
  * New node file
  */
+
+
 var express = require("express");
 var mysql = require("mysql");
 var app = express();
@@ -29,7 +31,7 @@ connection.connect(function(error){
 
 
 
-// Daten holen from player
+// Daten holen from player . nur für test
 app.get("/lobby-data",function(req,res){
 	connection.query('SELECT * from player', function(err, rows, fields) {
 	if (!err)
