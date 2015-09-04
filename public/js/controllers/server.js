@@ -31,7 +31,7 @@ connection.connect(function(error){
 
 
 
-// Daten holen from player . nur für test..
+// Daten holen from player . nur für test....
 app.get("/lobby-data",function(req,res){
 	connection.query('SELECT * from player', function(err, rows, fields) {
 	if (!err)
