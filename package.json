@@ -16,6 +16,7 @@
     "less-middleware": "~1.0.4",
     "socket.io": "~1.2.0",
     "connect": "~3.3.3",
-    "nodemon": "*"
+    "nodemon": "*",
+    "mysql":"~2.5.0"	
   }
 }
