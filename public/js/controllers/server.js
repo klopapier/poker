@@ -33,7 +33,7 @@ connection.connect(function(error){
 
 // Daten holen from player . nur für test....
 app.get("/lobby-data",function(req,res){
-	connection.query('SELECT name from player', function(err, rows, fields) {
+	connection.query('SELECT * from player', function(err, rows, fields) {
 	if (!err)
 		res.end(JSON.stringify(rows));
 	else
