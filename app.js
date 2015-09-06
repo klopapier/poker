@@ -6,6 +6,7 @@ var express = require('express'),
 	path = require('path'),
 	Table = require('./private/table'),
 	Player = require('./private/player');
+    mysql = require("mysql");
 
 app.set('views', path.join(__dirname, 'views'))
 	.set('view engine', 'jade')
@@ -15,6 +16,31 @@ app.set('views', path.join(__dirname, 'views'))
 	.use(app.router)
 	.use(lessMiddleware(__dirname + '/public'))
 	.use(express.static(path.join(__dirname, 'public')));
+
+
+// DB-Verbindung
+/*
+* Configure MySQL parameters.
+*/
+var connection = mysql.createConnection({
+	host : "localhost",
+	user : "root",
+	password : "root",
+	database : "poker"
+});
+
+/*Connecting to Database*/
+
+connection.connect(function(error){
+	if(error)
+	{
+		console.log("Problem with MySQL"+error);
+	}
+	else
+	{
+		console.log("Connected with Database");
+	}
+});
 
 // Development Only
 if ( 'development' == app.get('env') ) {
@@ -32,6 +58,19 @@ console.log('<<< Ich lebe in port ' + port + ' >>>');
 // get lobby
 app.get('/', function( req, res ) {
 	res.render('index');
+});
+
+
+// get Anmeldung
+app.get('/anmeldung',function(req,res){
+	connection.query('SELECT * from player', function(err, rows, fields) {
+	if (!err)
+		res.end(JSON.stringify(rows));
+	else
+		console.log('Error while performing Query.');
+	});
+
+	connection.end(); 
 });
 
 // lobby data
