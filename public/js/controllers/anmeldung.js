@@ -1,20 +1,22 @@
-app.controller('AnmeldungControlle',function($scope,$http,$interval){
-  load_pictures();
+/*app.controller('AnmeldungControlle',function($scope,$http,$interval){
+  load_player();
+  
   $interval(function(){
-    load_pictures();
-  },300);
-  function load_pictures(){
-  $http.get('http://localhost:1337/anmeldung').success(function(data){    
-    $scope.name=data;
-	$scope.email=data;
-  });
-  };
+    	load_player();
+  	},300);
+  
+  function load_player(){
+  		$http.get('http://localhost:1337/anmeldung').success(function(data){    
+    	$scope.name=data;
+		$scope.email=data;
+  		});
+  	};
+  	
 });
+*/
 
-
-/*app.controller('anmeldungControlle', ['$scope', '$rootScope', '$http', function( $scope, $rootScope, $http ) {
+app.controller('anmeldungControlle', ['$scope', '$rootScope', '$http', function( $scope, $rootScope, $http ) {
 	
-//	load_pictures();
 	$http({
 		url: '/anmeldung',
 		method: 'GET'
@@ -25,4 +27,4 @@ app.controller('AnmeldungControlle',function($scope,$http,$interval){
 
 	});
 	
-}]);*/
+}]);
