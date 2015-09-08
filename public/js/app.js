@@ -24,8 +24,11 @@ var socket = io.connect(),
 
 	$routeProvider.when('/', {
 
-		templateUrl: '/templates/lobby.html',
-		controller: 'LobbyController'
+		//templateUrl: '/templates/lobby.html',
+		//controller: 'LobbyController'
+		
+		templateUrl: '/templates/anmeldung.html',
+		controller: 'AnmeldungControlle'
 
 	});
 

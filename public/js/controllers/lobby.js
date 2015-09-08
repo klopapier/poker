@@ -1,4 +1,4 @@
-app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $scope, $rootScope, $http ) {
+app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $scope, $rootScope, $http ) {	
 
 	$scope.lobbyTables = [];
 	$scope.newScreenName = '';
@@ -14,7 +14,7 @@ app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $s
 
 		}
 	});
-
+			
 	$scope.register = function() {
 
 		// If there is some trimmed value for a new screen name
