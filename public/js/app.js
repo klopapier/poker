@@ -1,38 +1,40 @@
 var socket = io.connect(),
 	app = angular.module( 'app', ['ngRoute'] ).config( function( $routeProvider, $locationProvider ) {
 
-	$routeProvider.when('/table-10/:tableId', {
+	$routeProvider
+        .when('/table-10/:tableId', {
 
-		templateUrl: '/templates/table-10-handed.html',
-		controller: 'TableController'
+            templateUrl: '/templates/table-10-handed.html',
+            controller: 'TableController'
 
-	});
+	    })
+        .when('/table-6/:tableId', {
 
-	$routeProvider.when('/table-6/:tableId', {
+            templateUrl: '/templates/table-6-handed.html',
+            controller: 'TableController'
 
-		templateUrl: '/templates/table-6-handed.html',
-		controller: 'TableController'
+	    })
+        .when('/table-2/:tableId', {
 
-	});
+            templateUrl: '/templates/table-2-handed.html',
+            controller: 'TableController'
 
-	$routeProvider.when('/table-2/:tableId', {
+	    })
+        .when('/', {
 
-		templateUrl: '/templates/table-2-handed.html',
-		controller: 'TableController'
+            templateUrl: '/templates/lobby.html',
+            controller: 'LobbyController'
 
-	});
+	    })
+        .when('/users', {
 
-	$routeProvider.when('/', {
+            // here we set the controllers.
+            // do not set in the markup.
+            templateUrl: '/templates/admin/users.html',
+            controller: 'UserController'
+        })
 
-		//templateUrl: '/templates/lobby.html',
-		//controller: 'LobbyController'
-		
-		templateUrl: '/templates/anmeldung.html',
-		controller: 'AnmeldungControlle'
-
-	});
-
-	$routeProvider.otherwise( { redirectTo: '/' } );
+        .otherwise( { redirectTo: '/' } );
 
 	$locationProvider.html5Mode(true).hashPrefix('!');
 });

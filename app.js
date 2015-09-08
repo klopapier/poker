@@ -5,7 +5,7 @@ var express = require('express'),
 	lessMiddleware = require('less-middleware'),
 	path = require('path'),
 	Table = require('./private/table'),
-	Player = require('./private/player');
+	Player = require('./private/player'),
     mysql = require("mysql");
 
 app.set('views', path.join(__dirname, 'views'))
@@ -22,25 +22,36 @@ app.set('views', path.join(__dirname, 'views'))
 /*
 * Configure MySQL parameters.
 */
-var connection = mysql.createConnection({
+var db = mysql.createConnection({
 	host : "localhost",
 	user : "root",
-	password : "root",
-	database : "poker"
+	password : "toorape",
+	database : "sakila"
 });
 
-/*Connecting to Database*/
+db.connect();
 
-connection.connect(function(error){
-	if(error)
-	{
-		console.log("Problem with MySQL"+error);
-	}
-	else
-	{
+/*Connecting to Database*/
+/*db.connect(function(error){
+	if(error) {
+		console.log("Problem with MySQL" + error);
+	} else {
 		console.log("Connected with Database");
 	}
 });
+*/
+
+
+// test connection to actor rows
+/*connection.query('SELECT * from actor', function(err, rows, fields) {
+    if (!err)
+        console.log('>>> actor rows is : ', rows );
+    else
+        console.log('<<< Error Cannot get rows! >>>');
+});
+
+connection.end();
+*/
 
 // Development Only
 if ( 'development' == app.get('env') ) {
@@ -60,17 +71,33 @@ app.get('/', function( req, res ) {
 	res.render('index');
 });
 
+// to access the userlist.
+app.get('/users', function( req, res ){
+
+    // eather with empty string or with default string ('index')
+    // always better using default. never leave blank :)
+    // don't use default ('/users'), becouse Express going to look up the views dir.
+    // since we're using ngRoute, means we're overwrite the default Routes.
+    res.render('index');
+});
 
 // get Anmeldung
-app.get('/anmeldung',function(req,res){
-	connection.query('SELECT * from player', function(err, rows, fields) {
-	if (!err)
-		res.end(JSON.stringify(rows));
-	else
-		console.log('Error while performing Query.');
-	});
+// using English instead of German. app.get('/getUsers')
+// url:parameter should be the same name in the Controller
+app.get('/getUsers', function( req, res ){
 
-	connection.end(); 
+    var sql = 'SELECT * from actor';
+	db.query(sql, function( err, rows ) {
+
+        if ( !err ) {
+
+            res.json('index', rows);
+
+        } else {
+
+            console.log('Error while performing Query.');
+        }
+    });
 });
 
 // lobby data
