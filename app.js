@@ -98,9 +98,10 @@ app.get('/table-2/:tableId', function( req, res ) {
 
 });
 
-app.get('/lobby', function( req, res ){
+/*app.get('/lobby', function( req, res ){
 	res.render('index');
 })
+*/
 
 // table data
 app.get('/table-data/:tableId', function( req, res ) {
