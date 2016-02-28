@@ -1,13 +1,11 @@
 {
   "name": "Poker",
-  "version": "0.0.1",
   "private": false,
   "scripts": {
     "start": "nodemon app.js"
   },
   "repository": {
-    "type": "git",
-    "Auth": "A.Klein"
+    "type": "git"
   },
   "dependencies": {
     "connect": "~3.3.3",
