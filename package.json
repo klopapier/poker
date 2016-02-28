@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/giantape"
+    "Auth": "A.Klein"
   },
   "dependencies": {
     "connect": "~3.3.3",
@@ -16,7 +16,8 @@
     "less": "~2.0.0",
     "less-middleware": "~1.0.4",
     "mysql": "^2.9.0",
-    "nodemon": "^1.4.1",
-    "socket.io": "~1.2.0"
+    "bcrypt-nodejs": "*",
+    "socket.io": "~1.2.0",
+    "nodemon": "*"
   }
 }

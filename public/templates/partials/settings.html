@@ -1,0 +1,26 @@
+<div class="headline">
+    <h3>Settings</h3>
+</div>
+<div class="subline" ng-controller="dataModelController">
+	<form action="" method="">
+		<div class="rows" ng-repeat="set in settings">
+			<div class="col-6">
+				<p>{{set.options}}</p>
+			</div>
+		    <div class="col-4">
+		    	<div class="onoffswitch">
+				    <input type="checkbox" name="{{set.id}}" class="onoffswitch-checkbox" id="{{set.id}}" checked>
+				    <label class="onoffswitch-label" for="{{set.id}}">
+				        <span class="onoffswitch-inner"></span>
+				        <span class="onoffswitch-switch"></span>
+				    </label>
+				</div>
+		    </div>
+		</div>
+		<div class="row">
+			<div class="col-10">
+				<input class="settings-save" type="submit" value="SAVE">
+			</div>
+		</div>
+	</form>
+</div>

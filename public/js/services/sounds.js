@@ -1,5 +1,7 @@
-'use strict';
-
+/**
+ * Returns functions that play the sounds of the application
+ * @return object
+ */
 app.factory('sounds', [function() {
 	var foldSound = document.getElementById("fold-sound"),
 		checkSound = document.getElementById("check-sound"),

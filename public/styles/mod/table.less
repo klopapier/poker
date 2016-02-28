@@ -1,29 +1,57 @@
 /*
   table.less
-  author: giant ape
-  url: https://github.com/giantape
 */
 
 
 table, tr, th, td {
-  border: 1px solid @light-purple;
-  color: @light-purple;
+ 
+  color: @white;
   border-collapse: collapse;
-  padding: 8px;
+  padding: 10px;
+  text-align: center;
+
+  a{
+    color: @white;
+  }
 }
 
 table {
   width: 100%;
+  thead{
+    border-top: 5px solid @pink;
+  }
 }
 
+.flyout_container{
+  width: 100%;
+  background: #ff6600;
+}
+
+tbody.table-rows {
+    height: 300px;
+    margin: 30px;
+    overflow-y: scroll;
+  }
+
+tbody tr:nth-child(even) {
+   background: @tblstriped;
+}
 #table-wrap {
   position: relative;
 }
 
 #table-list {
+  
+  padding: 30px;
+  button {
+
+    border: 0;
+    padding:2px;
+    color: @white;
+  }
   th {
-    color: #2e1f3e;
-    background-color: #9880e9;
+    color: @white;
+    background: @black;
     &.dark-border {
       border-right: 1px solid #2e1f3e;
     }
@@ -56,72 +84,6 @@ table {
   }
 }
 
-div.row {
-  height: 25%;
-  width: 100%;
-  position: relative;
-  z-index: 2;
-
-  &.controls {
-
-    border-radius: 8px;
-    z-index: 1;
-  }
-}
-
-div.cell {
-  float: left;
-  width: 25%;
-  height: auto;
-  position: relative;
-
-  button {
-    //margin: 22.5% 15%;
-  }
-}
-
-div.double-cell {
-  float: left;
-  width: 50%;
-  height: 100%;
-}
-
-.controls {
-
-  div.cell {
-    width: 15%;
-  }
-
-  div.double-cell {
-
-    width: 30%;
-
-    .cell-content {
-      padding: 8%;
-    }
-  }
-  div.chat-cell {
-
-    float: left;
-    width: 25%;
-  }
-}
-
-.cont{
-
-  height: auto;
-  .cell {
-    width: 15%;
-  }
-
-  .double{
-
-    float: left;
-    width: 50%;
-  }
-}
-
-
 .sitIn {
   padding: 12% 34%;
   cursor: pointer;
@@ -129,4 +91,30 @@ div.double-cell {
 
 .table-requirements {
   display: block;
+}
+
+// table hood
+
+.table_hood {
+  
+    background: #eee;
+    a {
+          color: @black;
+      }
+    td{
+
+        color: @black;
+    }
+    tr{
+        border-bottom: 1px solid @black;
+    }
+    tbody tr:nth-child(even) {
+        background: #eee;
+        
+        a {
+            color: @black;
+        }
+
+
+    }
 }

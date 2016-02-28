@@ -1,6 +1,12 @@
-app.controller( 'ChatController', ['$scope', function( $scope ) {
 
-	//Chat
+/**
+ * The table controller. It keeps track of the data on the interface,
+ * depending on the replies from the server.
+ */
+app.controller( 'ChatController', ['$scope', function( $scope ) {
+	/**
+	 * Chat
+	 */
 	$scope.sendMessage = function() {
 		if ( $scope.messageText.trim() ) {
 			var message = $scope.messageText.trim();

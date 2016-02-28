@@ -1,0 +1,68 @@
+/*
+  footer.less
+*/
+
+footer {
+
+  .tabs-content {
+
+    width: auto;
+    padding: 20px;
+    background: #333;
+    color: @white;
+    overflow: hidden;
+    border-top: 5px solid @pink;
+  }
+
+  #mainViewFooter {
+
+    background: @tabs;
+    clear: both;
+    margin-bottom: 30px;
+    //overflow-y: scroll;
+    color: @white;
+    border-radius: 3px;
+  }
+
+  .recent_play {
+
+    float: left;
+    margin-right: 5px;
+    img {
+
+      width: 100px;
+      height: 142px;
+    }
+  }
+}
+
+.footer-tabs{
+  margin-top: -14px;
+  ul{
+    float: right;
+    li{
+      display: inline-block;
+    }
+  }
+
+  button{
+    border: none;
+    padding: 5px;
+    background: @color-danger;
+    color: @white;
+    font-size: 13px;
+    border-radius: 3px;
+  }
+  button.icon-ResetButton{
+    background: transparent;
+    color: @white;
+    font-size: 26px;
+  }
+}
+
+li.reload{
+  padding: 1px !important;
+}
+li.join{
+  padding: 6px !important;
+}

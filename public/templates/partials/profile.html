@@ -1,0 +1,34 @@
+<div class="container">
+    
+    <div class="user-profile">
+        <div class="avatar">
+            <img src="../images/avatar.jpg">
+        </div>
+        <div class="profile">
+            <p><span class="icon-ProfilePict"></span> ACCOUNT</p>
+            <p>Name: {{$root.username}}</p>
+            <p>Chips: {{$root.totalChips}}</p>
+
+        </div>
+        <div class="upload-avatar">
+            <form action="/" method="post">
+                <div class="fileUpload btn">
+                    <span>Upload</span>
+                    <input type="file" class="upload" />
+                </div>
+            </form>
+        </div>
+        <div class="casino-options">
+            <h4>CASINO<h4>
+                <form action="/" method="post">
+                    <select>
+                        <option>MACAU</option>
+                        <option>ROYAL CASINO</option>
+                        <option>BLA BLA CASINO</option>
+                    </select>
+                    <input type="submit" value="Change Casino">
+                </form>
+        </div>
+        <!--p>	Hallo {{$root.username}}!, please choise the Game. </p-->
+    </div>
+</div>
