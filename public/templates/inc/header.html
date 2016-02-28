@@ -1,0 +1,29 @@
+<div class="settings" ng-controller="settingsController">
+    <ul>
+        <li class="karten"></li>
+        <li class="mail"><span class="icon-Mail"></span></li>
+        <li class="settings" ng-click="toggle()"><span class="icon-Setting"></span></li>
+    </ul>
+    <div  class="content-setting" toggle>
+      <div ng-include="'templates/partials/settings.html'"></div>  
+    </div>
+    
+</div>
+<div class="users_header">
+    <ul>
+        <li><span class="icon-TumpukanChip"></span> $ {{$root.totalChips}},00</li>
+        <li><span class="icon-Diamond"></span>99</li>
+        <li><span class="icon-Piala"></span>Leaderboard</li>
+        <li><span class="icon-Chip1Keping"></span>Send Chips</li>
+        <li class="progress">
+            <span class="left">Level: 11</span>
+            <span class="right">Experience: 99/100%</span>
+            <div class="clear"></div>
+            <progress max="100" value="80"></progress>
+        </li>
+        <li><span class="icon-LikeFB"></span> like</li>
+        <li><a href="/" ng-click="logout()"> Logout</a></li>
+    </ul>
+</div>
+
+<div class="clear"></div>

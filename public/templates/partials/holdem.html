@@ -1,0 +1,65 @@
+<div id="viewOne">
+	<table id="table-list">
+		<thead>
+			<th>&nbsp;</th>
+			<th>ROOM</th>
+			<th>STAKES</th>
+			<th>MIN/MAX</th>
+			<th>PLAYER</th>
+			<th>&nbsp;</th>
+			<th>Aktion</th>
+		</thead>
+		<tbody >
+			<tr ng-repeat-start="type in gameTypes" ng-if="type.gameTyp == 'holdem'">
+				
+				<td >
+					<p class="icon-Gembok"></p>
+				</td>
+				<td >
+					<p>Room {{$index}}</p>
+				</td>
+				<td >
+					<p>Stakes</p>
+				</td>
+				<td >
+					<p>{{type.value}}</p>
+				</td>
+				<td >
+					<p>Player</p>
+				</td>
+				<td >
+					<p class="icon-Kamera"></p>
+				</td>
+				
+				<td >
+					<span ng-if="type.expanded" ng-click="type.expanded = false">
+						<a href="#">-</a>
+					</span>
+					<span ng-if="!type.expanded" ng-click="type.expanded = true">
+						<a href="/lobby" ng-click="searchRoom(type.bet_id, type.gameTyp)">+</a>
+					</span>
+				</td>
+			</tr >
+			<tr  ng-if="type.expanded && type.gameTyp == 'holdem'" ng-repeat-end="" >
+	          	<td colspan=7 >
+		          	<div ng-show="$root.lobbyTablesView==true">
+		          		<table class="table_hood">
+			                <thead>
+			                   <th>Name</th>
+			                   <th>BB/SB</th>
+			                   <th>Player</th>
+			                </thead>
+			                <tbody>
+			                    <tr ng-repeat="table in lobbyTables track by $index" ng-show="table &amp;&amp; $index > 0">
+									<td><a href="/table-{{table.seatsCount}}/{{table.id}}">{{table.name}}</a></td>
+									<td class="centered-text">{{table.bigBlind}}/{{table.smallBlind}}</td>
+									<td class="centered-text">{{table.playersSeatedCount}}/{{table.seatsCount}}</td>
+								</tr>
+			                </tbody>
+			            </table>
+		          	</div>
+	            </td>
+        	</tr>
+		</tbody>
+	</table>
+</div>

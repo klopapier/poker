@@ -1,0 +1,61 @@
+<div id="login">
+	<div class="modal-login" ng-show="!$root.username && !$root.registerView ">
+		<div class="modal">
+			<h3>Login</h3>
+			  <p class="table-requirements error" ng-show="registerError">{{registerError}}</p> 
+			<form ng-submit="login()" role="form" >					
+				<label for="screen-name-input">Enter your mail:</label>
+				<input id="screen-name-input" class="input-left" type="text" placeholder="example@mail.com" ng-model="email" ng-trim="true" required>				
+				<label for="screen-name-input">Enter your password:</label>
+				<input id="screen-name-input" class="input-left" type="text" placeholder="password" ng-model="password" ng-trim="true" required>
+				<span>
+					<a href="/" ng-click="toRegister()">Register</a>
+				</span>
+				 <input type="submit" value="Sign in"> 
+			</form>			
+		</div>
+		<div id="curtain" ng-show="!$root.username"></div>
+	 </div>	
+
+	<div class="modal-wrap" ng-show="!$root.username && $root.registerView==true">
+		<div class="modal">
+			<p><h3>Register</h3></p>
+			<p class="table-requirements error" ng-show="registerError">{{registerError}}</p>
+			<form ng-submit="signup()">					
+				<label for="screen-name-input">Enter your mail</label>
+				<input id="screen-name-input" class="input-left" type="text" ng-model="email" ng-trim="true" required>				
+				<label for="screen-name-input">Enter your password</label>
+				<input id="screen-name-input" class="input-left" type="text" ng-model="password" ng-trim="true" required>
+				<label for="screen-name-input">Enter your username</label>
+				<input id="screen-name-input" class="input-left" type="text" ng-model="username" ng-trim="true" required>
+				<a href="/" ng-click="toLogin()"><p style="text-decoration:underline;">Login</p></a>
+				<input type="submit" value="Submit">
+			</form>			
+		</div>
+	 </div>
+	
+	
+<!--  
+<div class="modal-wrap" ng-show="$root.username && $root.lobbyTablesView==false">
+		<p>	Hallo {{$root.username}}!, please choise the Game. </p>
+		
+	<div class="menu">
+      
+      <ul>
+        <li><h3>HOLD'EM</h3>
+            <ul >
+				<li  ng-repeat="type in gameTypes" ng-if="type.gameTyp == 'holdem'"><a href="/lobby-{{type.gameTyp}}/{{type.bet_id}}" >{{type.value}}</a></li>
+			</ul>
+		</li>
+		<li><h3>TOURNAMENT</h3></li>	
+        <li><h3>VIP</h3>
+        	<ul >
+				<li  ng-repeat="type in gameTypes" ng-if="type.gameTyp == 'vip'"><a href="/lobby-{{type.gameTyp}}/{{type.bet_id}}">{{type.value}}</a></li>
+			</ul>
+        </li>
+      </ul>
+  	</div>
+	
+</div>
+-->
+</div>

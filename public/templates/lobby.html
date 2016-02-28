@@ -1,26 +1,49 @@
-<div id="lobby">
-	<div class="modal-wrap" ng-show="!$root.screenName">
-		<div class="modal">
-			<form ng-submit="register()">
-				<label for="screen-name-input">Enter your screen name</label>
-				<p class="table-requirements error" ng-show="registerError">{{registerError}}</p>
-				<input id="screen-name-input" class="input-left" type="text" ng-model="newScreenName" ng-trim="true" required>
-				<input type="submit" value="Submit">
-			</form>
-		</div>
-		<div id="curtain" ng-show="!$root.screenName"></div>
-	</div>
-	<table id="table-list">
-		<tr>
-			<th class="dark-border">Name</th>
-			<th class="dark-border">BB/SB</th>
-			<th>Players</th>
-		</tr>
-		<tr ng-repeat="table in lobbyTables">
-			<td><a href="/table-{{table.seatsCount}}/{{table.id}}">{{table.name}}</a></td>
-			<td class="centered-text">{{table.bigBlind}}/{{table.smallBlind}}</td>
-			<td class="centered-text">{{table.playersSeatedCount}}/{{table.seatsCount}}</td>
-		</tr>
-	</table>
-</div>			
+<div class="bg-lobby" ng-show="$root.username">
+    <!-- Start Header -->
+        <div ng-include="'templates/inc/header.html'"></div>
+        <div ng-include="'templates/partials/profile.html'"></div>
+    <!-- End Header -->
+        <div class="container">
+        	<div class="rows">
+	        	<div class="col-7">
+					<div class="tabs">
+					    <div id="tabs" ng-controller="tabsController">
+					        <ul>
+					            <li class="headline" ng-repeat="tab in tabs" 
+					                ng-class="{active:isActiveTab(tab.url)}" 
+					                ng-click="onClickTab(tab)">{{tab.title}}
+				                </li>
+					        </ul>
+					        <div id="mainView">
+					            <div ng-include="currentTab"></div>
+					        </div>
+					        <!--footer tabs-->
+							<div ng-include="'templates/partials/tabs-footer.html'"></div>
+							<!--end footer tabs-->
+					    </div>
+					    <script type="text/ng-template" id="holdem">
+							<div ng-include="'templates/partials/holdem.html'"></div>
+						</script>
+						
+						<script type="text/ng-template" id="tournament">
+							<div ng-include="'templates/partials/tournament.html'"></div>
+						</script>
+						
+						<script type="text/ng-template" id="vip">
+							<div ng-include="'templates/partials/vip.html'"></div>
+						</script>
+					</div>
+				</div>
+				<div class="col-3">
+					<div ng-include="'templates/partials/chat.html'"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			
+        <!-- Start Footer -->
+            <div ng-include="'templates/inc/footer.html'"></div>
+        <!-- End Footer -->
 
+	</div>
+
+</div>

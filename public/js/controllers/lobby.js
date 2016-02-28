@@ -1,44 +1,54 @@
-app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $scope, $rootScope, $http ) {
-
-	$scope.lobbyTables = [];
-	$scope.newScreenName = '';
+app.controller( 'LobbyController', ['$scope', '$rootScope', '$http', '$routeParams', '$timeout', '$location',
+function( $scope, $rootScope, $http, $routeParams, $timeout, $location) {
+	
 
 	$http({
-		url: '/lobby-data',
+		url: '/bet-data',
 		method: 'GET'
-	}).success(function ( data, status, headers, config ) {
+	}).success(function (data,status, headers, config ) {
+					
+			$scope.gameTypes = data;
+		
+		
+		}).error(function(data) {
 
-		for( tableId in data ) {
+			console.log('Error: ' + data);
+    });
 
-			$scope.lobbyTables[tableId] = data[tableId];
+	
+	$scope.searchRoom = function( id, gameTyp ) {
+		$scope.id = id;
+		$scope.gameTyp = gameTyp;
+			socket.emit('searchRoom', $scope.id, $scope.gameTyp, function(response){
 
-		}
-	});
-
-	$scope.register = function() {
-
-		// If there is some trimmed value for a new screen name
-		if( $scope.newScreenName ) {
-
-			socket.emit( 'register', $scope.newScreenName, function( response ){
-
-				if( response.success ){
-
-					$rootScope.screenName = response.screenName;
-					$rootScope.totalChips = response.totalChips;
-					$scope.registerError = '';
+				if(response.success){
+				
+					$rootScope.lobbyTables = response.lobbyTables;
+					$rootScope.lobbyTablesView = true;
+					$rootScope.lobbyError = "";
 					$rootScope.$digest();
+					
+				}
+				else if(response.message) {
+					$scope.lobbyError = response.message;
 
 				}
-				else if( response.message ) {
-
-					$scope.registerError = response.message;
-
-				}
-
 				$scope.$digest();
-
 			});
-		}
-	}
+			
+	};
+	
+	$scope.logout = function() {
+		socket.emit( 'logout', function(response){
+			if(response.success){
+				$rootScope.username = response.username;
+				$location.path('/');
+				$rootScope.registerView = '';				
+				$rootScope.$digest();
+				process.exit();
+			}
+		});
+	};
+	
+
 }]);

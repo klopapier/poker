@@ -1,5 +1,5 @@
-var Player = require('../private/player.js'),
-	Table = require('../private/table.js');
+var Player = require('../poker_modules/player.js');
+var Table = require('../poker_modules/table.js');
 
 
 describe("Splitting the pot between two players", function() {
@@ -13,20 +13,17 @@ describe("Splitting the pot between two players", function() {
 
 		var eventEmitter = function( tableId ) {
 			return function ( eventName, eventData ) {};
-		};
+		}
 
  		var socket = {
-
 			emit: function() {
 				return;
-
 			}
 		};
 
-		table = new Table( 0, '10-handed Table', eventEmitter(0), 10, 2, 1, 200, 40, false );
+		table = new Table( 0, 'Sample 10-handed Table', eventEmitter(0), 10, 2, 1, 200, 40, false );
 
 		for( var i=0 ; i<3 ; i++ ) {
-
 			players[i] = new Player( socket, 'Player_'+i, 1000 );
 			players[i].socket = socket;
 			
@@ -98,7 +95,6 @@ describe("Splitting the pot between two players", function() {
 	it("should give an equal amount of chips back to the players, when there is no odd chip", function() {
 		table.playerChecked();
 		for( var i=0 ; i<3 ; i++ ) {
-
 			expect( players[i].public.chipsInPlay ).toEqual( initialChips );
 		}
 	});

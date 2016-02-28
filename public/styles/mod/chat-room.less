@@ -1,0 +1,88 @@
+/*
+	Chat-room.less
+*/
+
+.chat-room {
+	margin-right: 19px;
+	
+	.chat-headline{
+		background: @black;
+		padding: 10px;
+		color: @white;
+		border-bottom: 5px solid @pink;
+		span.icon-OnlineFriends{
+			font-size: 34px;
+		    float: left;
+		    margin-top: -10px;
+		    text-transform: uppercase;
+		    display: inline-block;
+		    position: relative;
+		    height: 0;
+		    font-weight: bold;
+		    border-right: 35px solid transparent;
+		    border-bottom: 40px solid @pink;
+		    padding: 0px 16px;
+		    margin-left: -10px;
+		    line-height: 42px;
+		    z-index: 1;
+		}
+		h3{
+			text-align: right;
+			margin: 0px;
+		}
+	}
+
+	.chat-content{
+		background: @tabs;
+		padding: 10px;
+		color: @black;
+
+		.invated-friends{
+			text-align: center;
+			    color: #fff;
+			    font-size: 14px;
+			    font-weight: 300;
+			.invated {
+				padding: 5px 20px;
+				text-align: center;
+				background: @black;
+				color: @white;
+				font-size: 14px;
+    			border: none;
+    			border-radius: 3px;
+			}
+		}
+
+		ul {
+			overflow-y: scroll;
+			height: 150px;
+
+			li{
+				display: block;
+				color: @black;
+				background: @white;
+				float: none;
+				width: auto;
+
+				&:hover{
+					background: @linkbutton-background-color;
+				}
+				&:first-child{
+					border-top-left-radius: 3px;
+					border-top-right-radius: 3px;
+				}
+				&:last-child{
+					border-bottom-left-radius: 3px;
+					border-bottom-right-radius: 3px;
+				}
+
+				span.icon-Lingkaran{
+					float:right;
+				}
+				.online{
+					color: @color-success;
+				}
+			}
+		}
+	}
+}

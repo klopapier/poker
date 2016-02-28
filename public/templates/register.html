@@ -1,0 +1,41 @@
+<div id="lobby">
+	<div class="modal-wrap" ng-show="!$root.username">
+		<div class="modal">
+			<p><h3>Register</h3></p>
+			<p class="table-requirements error" ng-show="registerError">{{registerError}}</p>
+			<form ng-submit="signup()">					
+				<label for="screen-name-input">Enter your mail</label>
+				<input id="screen-name-input" class="input-left" type="text" ng-model="email" ng-trim="true" required>				
+				<label for="screen-name-input">Enter your password</label>
+				<input id="screen-name-input" class="input-left" type="text" ng-model="password" ng-trim="true" required>
+				<label for="screen-name-input">Enter your username</label>
+				<input id="screen-name-input" class="input-left" type="text" ng-model="username" ng-trim="true" required>
+				<a href="/login"><p style="text-decoration:underline;">Login</p></a>
+				<input type="submit" value="Submit">
+			</form>			
+		</div>
+		<div id="curtain" ng-show="!$root.username"></div>
+	 </div>	
+<div class="modal-wrap" ng-show="$root.username">
+		<p>	Hallo {{$root.username}}!, please choise the Game. </p>
+		
+	<div class="menu">
+         <!-- The drop down menu -->
+      <ul>
+        <li><h3>HOLD'EM</h3>
+            <ul >
+				<li  ng-repeat="type in gameTypes" ng-if="type.bet_id >= 4"><a href="{{type.bet_id}}/holdem/lobby">{{type.value}}</a></li>
+			</ul>
+		</li>
+		<li><h3>TOURNAMENT</h3></li>	
+        <li><h3>VIP</h3>
+        	<ul >
+				<li  ng-repeat="type in gameTypes" ng-if="type.bet_id <= 7"><a href="{{type.bet_id}}/vip/lobby">{{type.value}}</a></li>
+			</ul>
+        </li>
+      </ul>
+  	</div>
+	
+</div>
+			
+</div>

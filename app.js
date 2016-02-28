@@ -4,8 +4,12 @@ var express = require('express'),
 	io = require('socket.io').listen(server),
 	lessMiddleware = require('less-middleware'),
 	path = require('path'),
+	bcrypt = require('bcrypt-nodejs'),
 	Table = require('./private/table'),
-	Player = require('./private/player');
+	Player = require('./private/player'),
+	User =require('./private/server/register'),
+	Room = require('./private/server/room');
+
 
 app.set('views', path.join(__dirname, 'views'))
 	.set('view engine', 'jade')
@@ -15,6 +19,7 @@ app.set('views', path.join(__dirname, 'views'))
 	.use(app.router)
 	.use(lessMiddleware(__dirname + '/public'))
 	.use(express.static(path.join(__dirname, 'public')));
+
 
 // Development Only
 if ( 'development' == app.get('env') ) {
@@ -27,35 +32,50 @@ var players = [],
 	port = process.env.PORT || 1337;
 
 server.listen(port);
-console.log('<<< Ich lebe in port ' + port + ' >>>');
+console.log('<<< We are in Port ' + port + ' >>>');
 
-// get lobby
+// to access login
 app.get('/', function( req, res ) {
 	res.render('index');
 });
 
-// lobby data
-app.get('/lobby-data', function( req, res ) {
 
-	var lobbyTables = [],
-		tableId;
+// lobby-data
+app.get('/bet-data', function( req, res ) {
+	
+	Room.getBets(function (err, results) {
+		if (!err){
+				gameTypes = JSON.stringify(results);
+				res.send(gameTypes);
 
-	for ( tableId in tables ) {
+		}else{
+			console.log('Error while performing Query.');
+		}
+	});
+	
+});
 
-		// Sending the public data of the public tables to the lobby screen
-		if( !tables[tableId].privateTable ) {
-			lobbyTables[tableId] = {};
-			lobbyTables[tableId].id = tables[tableId].public.id;
-			lobbyTables[tableId].name = tables[tableId].public.name;
-			lobbyTables[tableId].seatsCount = tables[tableId].public.seatsCount;
-			lobbyTables[tableId].playersSeatedCount = tables[tableId].public.playersSeatedCount;
-			lobbyTables[tableId].bigBlind = tables[tableId].public.bigBlind;
-			lobbyTables[tableId].smallBlind = tables[tableId].public.smallBlind;
+// get All Tables
+Room.getAllroom(function (err, results) {
+	if (!err){
+
+		for(var id in results){
+			
+			room_id = results[id].game_structure_id;
+			var name = results[id].nameSeat;
+			var seatsCount = results[id].seatCount;
+			var maxBuyIn = results[id].maxBuyIn;
+			var minBuyIn = results[id].minBuyIn;
+			var boolean = results[id].privatTable;
+				
+			tables[room_id] = new Table(room_id, name , eventEmitter(room_id), seatsCount, 2, 1, maxBuyIn, minBuyIn, boolean );
+			
+			tables[0] = new Table( 0, '5-handed Table', eventEmitter(0), 5, 4, 2, 400, 80, false );
+			
 		}
 	}
-
-	res.send( lobbyTables );
 });
+
 
 // If the table is requested manually, redirect to lobby
 app.get('/table-10/:tableId', function( req, res ) {
@@ -65,7 +85,7 @@ app.get('/table-10/:tableId', function( req, res ) {
 });
 
 // If the table is requested manually, redirect to lobby
-app.get('/table-6/:tableId', function( req, res ) {
+app.get('/table-5/:tableId', function( req, res ) {
 
 	res.redirect('/');
 
@@ -78,6 +98,10 @@ app.get('/table-2/:tableId', function( req, res ) {
 
 });
 
+app.get('/lobby', function( req, res ){
+	res.render('index');
+})
+
 // table data
 app.get('/table-data/:tableId', function( req, res ) {
 
@@ -89,21 +113,237 @@ app.get('/table-data/:tableId', function( req, res ) {
 });
 
 io.sockets.on('connection', function( socket ) {
+	
+	/**
+	 *  a player login
+	 */
+	
+	socket.on('signin', function(email, password, callback ) {
+		if( typeof email !== 'undefined' && typeof password !== 'undefined' && typeof players[socket.id] === 'undefined' ) {
+			var email = email.trim();
+			
+			if (email && password){
+				User.getUserByUserEmail(email, function (err, results) {
+				//console.log("result"+ results[0].email );
+					if(results == '' ) {  
+					
+						callback({
+							success: false,
+							message: 'Email not exits'
+						});
+						return;  
+					}  
+		       
+					//console.log("result"+ results[0].chips );
+					var chips = results[0].chips;
+					if(results[0].email != email || !bcrypt.compareSync(password, results[0].password)){
+						callback({
+							success: false,
+							message: 'Email or password error.'
+						});
+						return;  
+		            
+					}else{  
 
+						if(results[0].username != null && results[0].username != '' && results[0].avatar != ''){
+							
+						//	console.log("results[0].avatar"+ results[0].avatar);						
+							players[socket.id] = new Player(socket, results[0].username, chips );
+						//	console.log("socket.id"+ socket.id);
+							
+							callback({
+							success: true,
+							username: results[0].username,
+							avatar: results[0].avatar,
+							totalChips: players[socket.id].chips
+							});		        		        		
+						}else{
+							callback({
+								success: true,
+								username: results[0].email							
+								//totalChips: players[socket.id].chips
+							});
+						}
+					} 
+						
+				});
+						
+			}
+			
+		}else{			
+			callback({
+				success: false,
+				message: 'Email or password error.'
+			});
+			return;
+		}
+	});
+	
+	
+	/**
+	 * change to Register
+	 */
+		
+	socket.on('toRegister', function( callback ) {
+
+		if(typeof players[socket.id] === 'undefined') {
+
+				callback({
+					success: true,
+					registerView:true
+				});
+		}
+	});
+	
+	/**
+	 * change to Login
+	 */
+		
+	socket.on('toLogin', function( callback ) {
+
+		if(typeof players[socket.id] === 'undefined') {
+
+				callback({
+					success: true,
+					registerView:''
+				});
+			}
+	});
+	
+
+	/**
+	 * a Player Register
+	 */
+	
+	socket.on('signup', function(email, password, username, callback ) {
+		if( typeof email !== 'undefined' && typeof password !== 'undefined' && typeof players[socket.id] === 'undefined') {
+			
+			//console.log("result email:"+ email + "passw:"+password+ "username:"+ username);
+			if (email && password){				
+				if(email){
+					// Check the exist email in DB
+				User.checkEmailinDB(email, function (err, results){	
+						
+					if(results != "" ){
+							// If Email exist in DB
+							callback({
+								success: false,
+								message: 'Email ist already exist'
+							});
+							return;
+							
+					}else{
+
+						var password = bcrypt.hashSync(password);
+							// new Register
+						User.insertRegisterSave(email,password, username, function (err, results) {
+
+								if(err){
+									callback({
+										success: false,
+										message: 'Register ist not success!'
+									});
+									return;  
+									
+								}else{
+									
+									players[socket.id] = new Player(socket, username, 1000 );					
+									callback({
+										success: true,
+										username: username,							
+										//totalChips: players[socket.id].chips
+									});	
+									}					
+							});
+														
+					}
+				});
+				}					
+			}	
+		}else{			
+			callback({
+				success: false,
+				message: 'Email, password or username error.'
+			});
+			return;
+		}
+	});
+	
+
+	/**
+	 * search a Room..
+	 */
+		
+	socket.on('searchRoom', function( id, gameTyp, callback ) { 
+		
+		if(id !== 'undefined' && typeof gameTyp !== 'undefined' && typeof players[socket.id] !== 'undefined') {
+
+			Room.searchRoom(id, gameTyp, function (err, results) {
+				if(!err){
+
+					var lobbyTables = [],
+					tableId;
+					for(var id in results){						
+						
+						tableId = results[id].game_structure_id;
+
+							if( !tables[tableId].privateTable ) {
+								lobbyTables[tableId] = {};
+								lobbyTables[tableId].id = tables[tableId].public.id;
+								lobbyTables[tableId].name = tables[tableId].public.name;
+								lobbyTables[tableId].seatsCount = tables[tableId].public.seatsCount;
+								lobbyTables[tableId].playersSeatedCount = tables[tableId].public.playersSeatedCount;
+								lobbyTables[tableId].bigBlind = tables[tableId].public.bigBlind;
+								lobbyTables[tableId].smallBlind = tables[tableId].public.smallBlind;
+							}
+					}
+
+					callback({
+						success: true,
+						lobbyTables:lobbyTables,
+						lobbyTablesView:''
+							
+					});
+					
+				}else{			
+					callback({
+						success: false,
+						message: 'Data-Base Error!'
+					});
+					return;
+				}
+			});
+			
+		}else{			
+			callback({
+				success: false,
+				message: 'No Data in Room!'
+			});
+			return;
+		}
+	});
+	
 	/**
 	 * When a player enters a room
 	 * @param object table-data
 	 */
 
 	socket.on('enterRoom', function( tableId ) {
-
-		if( typeof players[socket.id] !== 'undefined' && players[socket.id].room === null ) {
+		
+		if( typeof players[socket.id] !== 'undefined' 
+			&& players[socket.id].room === null ) {
+			
+			console.log("i am in enterRoom");
 
 			// Add the player to the socket room
 			socket.join( 'table-' + tableId );
+			
+			console.log("i am in enterRoom" + tableId);
 
 			// Add the room to the player's data
 			players[socket.id].room = tableId;
+			
+			//console.log("player-test enter room" + players[socket.id].room);
 
 		}
 	});
@@ -115,8 +355,11 @@ io.sockets.on('connection', function( socket ) {
 	socket.on('leaveRoom', function() {
 
 		if( typeof players[socket.id] !== 'undefined'
-			&& players[socket.id].room !== null
+			&& players[socket.id].room !== null 
+			//&& players[socket.id].lobby !== null
 			&& players[socket.id].sittingOnTable === false ) {
+			
+			console.log("i am in leaveRoom");
 
 			// Remove the player from the socket room
 			socket.leave( 'table-' + players[socket.id].room );
@@ -155,6 +398,42 @@ io.sockets.on('connection', function( socket ) {
 			delete players[socket.id];
 		}
 	});
+	
+	/**
+	 * When a player disconnects && Logout
+	 */
+
+	socket.on('logout', function(callback) {
+
+		// If the socket points to a player object
+		if( typeof players[socket.id] !== 'undefined' ) {
+
+			// If the player was sitting on a table
+			if( players[socket.id].sittingOnTable !== false &&
+				typeof tables[players[socket.id].sittingOnTable] !== 'undefined' ) {
+
+				// The seat on which the player was sitting
+				var seat = players[socket.id].seat;
+
+				// The table on which the player was sitting
+				var tableId = players[socket.id].sittingOnTable;
+
+				// Remove the player from the seat
+				tables[tableId].playerLeft( seat );
+
+			}
+
+			// Remove the player object from the players array
+			delete players[socket.id];
+			
+			callback({
+				success: true,
+				registerView:'',				
+				username: ''
+				
+			});
+		}
+	});
 
 	/**
 	 * When a player leaves the table
@@ -181,73 +460,6 @@ io.sockets.on('connection', function( socket ) {
 		}
 	});
 
-	/**
-	 * When a new player enters the application
-	 * @param string newScreenName
-	 * @param function callback
-	 */
-
-	socket.on('register', function( newScreenName, callback ) {
-
-		// If a new screen name is posted
-		if( typeof newScreenName !== 'undefined' ) {
-
-			var newScreenName = newScreenName.trim();
-
-			// If the new screen name is not an empty string
-			if( newScreenName && typeof players[socket.id] === 'undefined' ) {
-
-				var nameExists = false;
-				for( var i in players ) {
-
-					if( players[i].public.name && players[i].public.name == newScreenName ) {
-						nameExists = true;
-						break;
-					}
-				}
-
-				if( !nameExists ) {
-
-					// Creating the player object
-					players[socket.id] = new Player( socket, newScreenName, 1000 );
-					callback({
-
-						success: true,
-						screenName: newScreenName,
-						totalChips: players[socket.id].chips
-					});
-
-
-				} else {
-
-					callback({
-
-						success: false,
-						message: 'This name is taken'
-					});
-
-				}
-
-			} else {
-
-				callback({
-
-					success: false,
-					message: 'Please enter a screen name'
-				});
-			}
-
-		} else {
-
-			callback({
-
-				success: false,
-				message: ''
-			});
-
-		}
-
-	})
 
 	/**
 	 * When a player requests to sit on a table
@@ -294,9 +506,13 @@ io.sockets.on('connection', function( socket ) {
 			&& data.chips % 1 === 0
 
 		){
+			
+			console.log("i am in sitOnTable");
+			
 			// The chips the player chose are less than the total chips the player has
 			if( data.chips > players[socket.id].chips )
-
+				
+				
 				callback({
 					success: false,
 					error: 'You don\'t have that many chips'
@@ -323,6 +539,9 @@ io.sockets.on('connection', function( socket ) {
 				// Add the player to the table
 				tables[data.tableId].playerSatOnTheTable( players[socket.id], data.seat, data.chips );
 
+				//console.log('results:'+ data.tableId+ 'players[socket.id]:' +players[socket.id]+ 'data.seat:' + data.seat);
+				
+				
 			} else {
 
 			// If the user is not allowed to sit in, notify the user
@@ -336,14 +555,23 @@ io.sockets.on('connection', function( socket ) {
 	 */
 	socket.on('sitIn', function( callback ) {
 
+		console.log("players[socket.id].sittingOnTable:" + players[socket.id].sittingOnTable);
+		console.log("players[socket.id].seat:" + players[socket.id].seat);
+		console.log("players[socket.id].public.sittingIn:" + players[socket.id].public.sittingIn);
+		
 		if( players[socket.id].sittingOnTable !== false &&
 			players[socket.id].seat !== null &&
 			!players[socket.id].public.sittingIn ) {
 
+			console.log("i am in sitIn");
 			// Getting the table id from the player object
 			var tableId = players[socket.id].sittingOnTable;
+			
+			console.log("tableId:" + tableId);
 
 			tables[tableId].playerSatIn( players[socket.id].seat );
+			
+			console.log("players[socket.id].seat:" +players[socket.id].seat);
 				callback({
 					success: true
 				});
@@ -560,7 +788,7 @@ io.sockets.on('connection', function( socket ) {
 	socket.on('sendMessage', function( message ) {
 
 		message = message.trim();
-		if( message && players[socket.id].room ) {
+		if( message && players[socket.id].room) {
 
 			socket.broadcast.to( 'table-' + players[socket.id].room )
 				.emit( 'receiveMessage', {
@@ -579,14 +807,21 @@ io.sockets.on('connection', function( socket ) {
  * @param string tableId
  */
 var eventEmitter = function( tableId ) {
-
 	return function ( eventName, eventData ) {
-
+		
+	//	console.log("eventName:"+ eventName);
+	//	console.log("eventData:"+ eventData);
+		
 		io.sockets.in( 'table-' + tableId )
 			.emit( eventName, eventData );
+		
 
+		
 	}
 };
+
+
+
 
 /**
  * Changes certain characters in a string to html entities
@@ -601,7 +836,22 @@ function htmlEntities(str) {
 
 }
 
-tables[0] = new Table( 0, '10-handed Table', eventEmitter(0), 10, 2, 1, 200, 40, false );
-tables[1] = new Table( 1, '6-handed Table', eventEmitter(1), 6, 4, 2, 400, 80, false );
-tables[2] = new Table( 2, '2-handed Table', eventEmitter(2), 2, 8, 4, 800, 160, false );
-tables[3] = new Table( 3, '6-handed Private Table', eventEmitter(3), 6, 20, 10, 2000, 400, true );
+
+/*
+tables[0] = new Table( 0, '5-handed Table', eventEmitter(0), 5, 4, 2, 400, 80, false );
+tables[1] = new Table( 1, '2-handed Table', eventEmitter(1), 2, 8, 4, 800, 160, false );
+tables[2] = new Table( 2, '5-handed Table', eventEmitter(2), 5, 4, 2, 400, 80, false );
+tables[3] = new Table( 3, '2-handed Table', eventEmitter(3), 2, 8, 4, 800, 160, false );
+tables[4] = new Table( 4, '5-handed Table', eventEmitter(4), 5, 4, 2, 400, 80, false );
+tables[5] = new Table( 5, '2-handed Table', eventEmitter(5), 2, 8, 4, 800, 160, false );
+tables[6] = new Table( 6, '5-handed Table', eventEmitter(6), 5, 4, 2, 400, 80, false );
+tables[7] = new Table( 7, '2-handed Table', eventEmitter(7), 2, 8, 4, 800, 160, false );
+tables[8] = new Table( 8, '5-handed Table', eventEmitter(8), 5, 4, 2, 400, 80, false );
+tables[9] = new Table( 9, '2-handed Table', eventEmitter(9), 2, 8, 4, 800, 160, false );
+tables[10] = new Table( 10, '5-handed Table', eventEmitter(10), 5, 4, 2, 400, 80, false );
+tables[11] = new Table( 11, '2-handed Table', eventEmitter(11), 2, 8, 4, 800, 160, false );
+//tables[4] = new Table( 4, '6-handed Private Table', eventEmitter(4), 5, 20, 10, 2000, 400, true );
+
+*/
+
+

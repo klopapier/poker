@@ -1,0 +1,15 @@
+<div id="lobby">
+	<table id="table-list">
+		<tr>
+			<th class="dark-border">Name</th>
+			<th class="dark-border">BB/SB</th>
+			<th>Players</th>
+		</tr>
+		<tr ng-repeat="table in lobbyTables">
+			<td><a href="/table-{{table.seatsCount}}/{{table.id}}">{{table.name}}</a></td>
+			<td class="centered-text">{{table.bigBlind}}/{{table.smallBlind}}</td>
+			<td class="centered-text">{{table.playersSeatedCount}}/{{table.seatsCount}}</td>
+		</tr>
+	</table>
+</div>			
+
