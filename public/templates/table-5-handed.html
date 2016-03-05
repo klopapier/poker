@@ -1,74 +1,69 @@
-<div id="table-wrap">
-	<div ng-include="'../templates/partials/modal.html'"></div>
-	
-	<div class="row">
-		<div ng-include="'templates/inc/header.html'"></div>
-		<div class="cell">
-			<a id="to-lobby" class="button" href="/lobby" ng-show="!$root.sittingOnTable" ng-click="leaveRoom()">< Lobby</a>
-		</div>
-<!--		<div class="cell">
-			<seat player="table.seats[0]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="0" cell-number="1"></seat>
-		</div>
-		<div class="cell">
-			<seat player="table.seats[1]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="1" cell-number="2"></seat>
-		</div>  -->
-		<div class="cell"></div>
-	</div>
-	
-	<div class="row">
-		<div class="cell">
-			<seat player="table.seats[4]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="4" cell-number="9" class="side"></seat>
-		</div>
-		<div class="double-cell">
-			<div id="pot-wrap">
-				<span id="pot" ng-show="table.pot[0].amount">{{potText()}}</span>
-			</div>
-			<div id="board-wrap">
-				<div class="card-container">
-					<div class="card card-{{table.board[0]}}" ng-show="table.board[0]"></div>
-				</div>
-				<div class="card-container">
-					<div class="card card-{{table.board[1]}}" ng-show="table.board[1]"></div>
-				</div>
-				<div class="card-container">
-					<div class="card card-{{table.board[2]}}" ng-show="table.board[2]"></div>
-				</div>
-				<div class="card-container">
-					<div class="card card-{{table.board[3]}}" ng-show="table.board[3]"></div>
-				</div>
-				<div class="card-container">
-					<div class="card card-{{table.board[4]}}" ng-show="table.board[4]"></div>
-				</div>
-			</div>
-		</div>
-		<div class="cell">
-			<seat player="table.seats[0]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="0" cell-number="4" class="side"></seat>
-		</div>
-	</div>
-	<div class="row">
-		
-		<div class="cell">
-			<seat player="table.seats[1]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="1" cell-number="7" class="bottom left"></seat>
-		</div>
-			
-		<div class="cell">
-			<seat player="table.seats[2]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="2" cell-number="6"></seat>
-		</div>
+<div class="rows">
+    <div ng-include="'templates/inc/header.html'"></div>
+    <div class="col-2">
+        <a id="to-lobby" class="button" href="/lobby" ng-show="!$root.sittingOnTable" ng-click="leaveRoom()">< Lobby</a>
+    </div>
+</div>
+<div class="rows">
+        <div ng-include="'../templates/partials/modal.html'"></div>
+    <div id="table">
+        <div id="felt">
+            <div id="table-wrap">
+                <div class="rows">
+                    <div class="col-2">
+                        <seat player="table.seats[4]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="4" cell-number="9"></seat>
+                    </div>
+                    <div class="double-cell">
+                        <div id="pot-wrap">
+                            <span id="pot" ng-show="table.pot[0].amount">{{potText()}}</span>
+                        </div>
+                        <div id="board-wrap">
+                            <div class="card-container">
+                                <div class="card card-{{table.board[0]}}" ng-show="table.board[0]"></div>
+                            </div>
+                            <div class="card-container">
+                                <div class="card card-{{table.board[1]}}" ng-show="table.board[1]"></div>
+                            </div>
+                            <div class="card-container">
+                                <div class="card card-{{table.board[2]}}" ng-show="table.board[2]"></div>
+                            </div>
+                            <div class="card-container">
+                                <div class="card card-{{table.board[3]}}" ng-show="table.board[3]"></div>
+                            </div>
+                            <div class="card-container">
+                                <div class="card card-{{table.board[4]}}" ng-show="table.board[4]"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <seat player="table.seats[0]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="0" cell-number="4" class="side"></seat>
+                    </div>
 
-		<div class="cell">
-			<seat player="table.seats[3]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="3" cell-number="5" class="bottom right"></seat>
-		</div>
-		<div class="cell"></div>
-	</div>
-	<div class="clear"></div>
-	<div ng-include="'../templates/partials/player-control.html'"></div>
-	<div id="audio">
-		<audio id="fold-sound" src="/audio/fold.wav" preload="auto">
-		<audio id="check-sound" src="/audio/check.wav" preload="auto">
-		<audio id="call-sound" src="/audio/call.wav" preload="auto">
-		<audio id="bet-sound" src="/audio/bet.wav" preload="auto">
-		<audio id="raise-sound" src="/audio/raise.wav" preload="auto">
-	</div>
-	<div class="clear"></div>
-	<div ng-include="'templates/inc/footer.html'"></div>
+                    <div class="col-2">
+                        <seat player="table.seats[1]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="1" cell-number="7" class="bottom left"></seat>
+                    </div>
+
+                    <div class="col-2">
+                        <seat player="table.seats[2]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="2" cell-number="6"></seat>
+                    </div>
+
+                    <div class="col-2">
+                        <seat player="table.seats[3]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="3" cell-number="5" class="bottom right"></seat>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+    <div ng-include="'../templates/partials/player-control.html'"></div>
+    <div id="audio">
+        <audio id="fold-sound" src="/audio/fold.wav" preload="auto">
+        <audio id="check-sound" src="/audio/check.wav" preload="auto">
+        <audio id="call-sound" src="/audio/call.wav" preload="auto">
+        <audio id="bet-sound" src="/audio/bet.wav" preload="auto">
+        <audio id="raise-sound" src="/audio/raise.wav" preload="auto">
+    </div>
+    <div class="clear"></div>
+    <div ng-include="'templates/inc/footer.html'"></div>
 </div>

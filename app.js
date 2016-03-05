@@ -39,7 +39,6 @@ app.get('/', function( req, res ) {
 	res.render('index');
 });
 
-
 // lobby-data
 app.get('/bet-data', function( req, res ) {
 	
@@ -81,6 +80,7 @@ Room.getAllroom(function (err, results) {
 app.get('/table-10/:tableId', function( req, res ) {
 
 	res.redirect('/');
+	//res.render('index');
 
 });
 
@@ -88,6 +88,7 @@ app.get('/table-10/:tableId', function( req, res ) {
 app.get('/table-5/:tableId', function( req, res ) {
 
 	res.redirect('/');
+	//res.render('index');
 
 });
 
@@ -95,13 +96,11 @@ app.get('/table-5/:tableId', function( req, res ) {
 app.get('/table-2/:tableId', function( req, res ) {
 
 	res.redirect('/');
+	//res.render('index');
 
 });
 
-/*app.get('/lobby', function( req, res ){
-	res.render('index');
-})
-*/
+
 
 // table data
 app.get('/table-data/:tableId', function( req, res ) {
@@ -109,6 +108,7 @@ app.get('/table-data/:tableId', function( req, res ) {
 	if( typeof req.params.tableId !== 'undefined' && typeof tables[req.params.tableId] !== 'undefined' ) {
 
 		res.send( { 'table': tables[req.params.tableId].public } );
+		//res.render('index');
 
 	}
 });
@@ -251,7 +251,7 @@ io.sockets.on('connection', function( socket ) {
 									players[socket.id] = new Player(socket, username, 1000 );					
 									callback({
 										success: true,
-										username: username,							
+										username: username
 										//totalChips: players[socket.id].chips
 									});	
 									}					
@@ -845,7 +845,7 @@ tables[2] = new Table( 2, '5-handed Table', eventEmitter(2), 5, 4, 2, 400, 80, f
 tables[3] = new Table( 3, '2-handed Table', eventEmitter(3), 2, 8, 4, 800, 160, false );
 tables[4] = new Table( 4, '5-handed Table', eventEmitter(4), 5, 4, 2, 400, 80, false );
 tables[5] = new Table( 5, '2-handed Table', eventEmitter(5), 2, 8, 4, 800, 160, false );
-tables[6] = new Table( 6, '5-handed Table', eventEmitter(6), 5, 4, 2, 400, 80, false );
+/*tables[6] = new Table( 6, '5-handed Table', eventEmitter(6), 5, 4, 2, 400, 80, false );
 tables[7] = new Table( 7, '2-handed Table', eventEmitter(7), 2, 8, 4, 800, 160, false );
 tables[8] = new Table( 8, '5-handed Table', eventEmitter(8), 5, 4, 2, 400, 80, false );
 tables[9] = new Table( 9, '2-handed Table', eventEmitter(9), 2, 8, 4, 800, 160, false );

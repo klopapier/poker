@@ -1,6 +1,7 @@
-Poker
------------------------
+todo: change route params:
+.when('/table-5/tableId', {
 
+            templateUrl: '/templates/table-5-handed.html',
+            controller: 'TableController'
 
-Node-Modul : npm install
-for Start : node app.js
+	    })

@@ -8,7 +8,7 @@ var socket = io.connect(),
             controller: 'TableController'
 
 	    })
-        .when('/table-5/:tableId', {
+        .when('/', {
 
             templateUrl: '/templates/table-5-handed.html',
             controller: 'TableController'
@@ -22,13 +22,13 @@ var socket = io.connect(),
 	    })
 	    .when('/lobby', {
 	    	templateUrl: '/templates/lobby.html',
-	    	controller: 'LobbyController', 
+	    	controller: 'LobbyController'
 	    })
 
-	    .when('/', {
-	    	templateUrl: '/templates/login.html',
-	    	controller: 'LoginController', 
-	    })
+	    //.when('/', {
+	    //	templateUrl: '/templates/login.html',
+	    //	controller: 'LoginController'
+	    //})
 
 		.otherwise( { redirectTo: '/' } );
 	    
